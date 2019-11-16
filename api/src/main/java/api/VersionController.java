@@ -10,8 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VersionController {
 
+    private String appVersion;
+
+    public VersionController() {
+        try (InputStream input = new FileInputStream("src/main/resources/app.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            appVersion = prop.getProperty("version");
+        } catch (IOException ex) {
+            appVersion = "0.0.0";
+        }
+    }
+
     @RequestMapping("/version")
     public Version version() {
-        return new Version("0.0.1");
+        return new Version(appVersion);
     }
 }

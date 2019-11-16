@@ -16,6 +16,12 @@ apply plugin: 'io.spring.dependency-management'
 bootJar {
     archiveBaseName = 'chess'
     archiveVersion =  '0.0.1'
+
+    def prop = new Properties()
+    prop.setProperty("version", archiveVersion.get())
+    def propFile = new File("${project.rootDir}/src/main/resources/app.properties");
+    propFile.createNewFile();
+    prop.store(propFile.newWriter(), null);
 }
 
 repositories {
