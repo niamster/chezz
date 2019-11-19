@@ -12,6 +12,6 @@ class ApplicationConfig {
 
     @Bean
     public KeyWhitener keyWhitener() {
-        return new KeyWhitenerArgon2();
+        return new KeyWhitenerBCrypt();
     }
 }
