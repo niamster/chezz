@@ -9,4 +9,9 @@ class ApplicationConfig {
     public UserStore userStore() {
         return new UserStoreMem();
     }
+
+    @Bean
+    public KeyWhitener keyWhitener() {
+        return new KeyWhitenerArgon2();
+    }
 }

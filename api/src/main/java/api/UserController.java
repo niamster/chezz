@@ -8,8 +8,8 @@ public class UserController {
 
     private final UserManager userManager;
 
-    public UserController(UserStore store) {
-        this.userManager = new UserManager(store);
+    public UserController(UserStore store, KeyWhitener keyWhitener) {
+        this.userManager = new UserManager(store, keyWhitener);
     }
 
     class Status {
