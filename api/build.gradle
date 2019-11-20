@@ -22,6 +22,8 @@ bootJar {
     def propFile = new File("${project.rootDir}/src/main/resources/app.properties");
     propFile.createNewFile();
     prop.store(propFile.newWriter(), null);
+    println ""
+    println "Build output: " + relativePath(jar.destinationDirectory) + "/" + archiveName
 }
 
 repositories {
