@@ -1,10 +1,20 @@
 package api;
 
-import org.springframework.context.annotation.Configuration;
+import java.util.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class ApplicationConfig {
+public class ApplicationConfig {
+
+    private final Logger logger = LogManager.getLogger(UserStoreMem.class);
+
+    @Autowired
+    private ConfigProperties config;
+
     @Bean
     public UserStore userStore() {
         return new UserStoreMem();
@@ -12,6 +22,15 @@ class ApplicationConfig {
 
     @Bean
     public KeyWhitener keyWhitener() {
-        return new KeyWhitenerBCrypt();
+        String keyWhitener = config.getSecurityProperties().getKeyWhitener();
+        logger.info("Using '{}' as key whitener", keyWhitener);
+        switch (keyWhitener) {
+            case "bcrypt":
+                return new KeyWhitenerBCrypt();
+            case "argon2":
+                return new KeyWhitenerArgon2();
+            default:
+                throw new ServiceConfigurationError(String.format("Unknown key whitener '%s'", keyWhitener));
+        }
     }
 }
