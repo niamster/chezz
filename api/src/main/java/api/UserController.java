@@ -7,17 +7,27 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserManager userManager;
+    private final UserTokenStore userTokenStore;
+    private final UserTokenGenerator userTokenGenerator;
 
-    public UserController(UserStore store, KeyWhitener keyWhitener) {
-        this.userManager = new UserManager(store, keyWhitener);
+    public UserController(UserManager userManager, UserTokenStore userTokenStore, UserTokenGenerator userTokenGenerator) {
+        this.userManager = userManager;
+        this.userTokenStore = userTokenStore;
+        this.userTokenGenerator = userTokenGenerator;
     }
 
     class Status {
 
         public String status;
+        public String token;
 
         public Status(String status) {
             this.status = status;
+        }
+
+        public Status(String status, String token) {
+            this.status = status;
+            this.token = token;
         }
     }
 
@@ -28,10 +38,12 @@ public class UserController {
         public String password;
     }
 
-    @PostMapping(value = "/signup", consumes = "application/json")
+    @PostMapping(value = APISecurity.PUBLIC_EP_PREFIX + "/signup", consumes = "application/json")
     public Status signup(@RequestBody SignUpRequest req) {
         if (userManager.addUser(req.username, req.email, req.password)) {
-            return new Status("ok");
+            String token = userTokenGenerator.generateToken(req.username);
+            userTokenStore.setUserToken(req.username, token);
+            return new Status("ok", token);
         }
         return new Status("fail");
     }
@@ -42,16 +54,24 @@ public class UserController {
         public String password;
     }
 
-    @PostMapping(value = "/signin", consumes = "application/json")
+    @PostMapping(value = APISecurity.PUBLIC_EP_PREFIX + "/signin", consumes = "application/json")
     public Status signin(@RequestBody SignInRequest req) {
         if (userManager.verifyUser(req.username, req.password)) {
-            return new Status("ok");
+            String token = userTokenGenerator.generateToken(req.username);
+            userTokenStore.setUserToken(req.username, token);
+            return new Status("ok", token);
         }
         return new Status("fail");
     }
 
-    @GetMapping("/users")
+    @GetMapping(APISecurity.PUBLIC_EP_PREFIX + "/users")
     public List<String> users() {
         return userManager.getAllUsers();
+    }
+
+    @GetMapping(APISecurity.PROTECTED_EP_PREFIX + "/user/info")
+    public String users(@RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken) {
+        String username = userTokenStore.getUser(userToken);
+        return userManager.getUserInfo(username).email;
     }
 }

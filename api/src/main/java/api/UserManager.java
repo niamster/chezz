@@ -25,4 +25,8 @@ public class UserManager {
     public List<String> getAllUsers() {
         return store.getAllUsers();
     }
+
+    public UserStore.UserMeta getUserInfo(String username) {
+        return store.getUser(username);
+    }
 }

@@ -22,7 +22,7 @@ public class VersionController {
         }
     }
 
-    @RequestMapping("/version")
+    @RequestMapping(APISecurity.PUBLIC_EP_PREFIX + "/version")
     public Version version() {
         return new Version(appVersion);
     }

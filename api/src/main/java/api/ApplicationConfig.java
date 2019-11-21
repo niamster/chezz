@@ -33,4 +33,21 @@ public class ApplicationConfig {
                 throw new ServiceConfigurationError(String.format("Unknown key whitener '%s'", keyWhitener));
         }
     }
+
+    @Bean
+    public UserTokenStore userTokenStore() {
+        return new UserTokenStoreMem();
+    }
+
+    @Bean
+    public UserTokenGenerator userTokenGenerator() {
+        return new UserTokenGeneratorSimple();
+    }
+
+    // XXX: maybe this is not the best place to init User Manager
+    @Bean
+    public UserManager userManager(UserStore userStore,
+                                   KeyWhitener keyWhitener) {
+        return new UserManager(userStore, keyWhitener);
+    }
 }

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 class UserStoreMem implements UserStore {
+
     private final Logger logger = LogManager.getLogger(UserStoreMem.class);
     private final Map<String, UserStore.UserMeta> store = new HashMap<String, UserStore.UserMeta>();
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
