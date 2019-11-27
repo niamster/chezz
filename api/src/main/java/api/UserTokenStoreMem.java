@@ -33,4 +33,16 @@ public class UserTokenStoreMem implements UserTokenStore {
             wLock.unlock();
         }
     }
+
+    public void removeToken(String token) {
+        if (token == null) {
+            return;
+        }
+        wLock.lock();
+        try {
+            userByToken.remove(token);
+        } finally {
+            wLock.unlock();
+        }
+    }
 }

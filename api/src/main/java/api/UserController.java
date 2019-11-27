@@ -64,6 +64,11 @@ public class UserController {
         return new Status("fail");
     }
 
+    @GetMapping(APISecurity.PROTECTED_EP_PREFIX + "/signout")
+    public void signout(@RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken) {
+        userTokenStore.removeToken(userToken);
+    }
+
     @GetMapping(APISecurity.PUBLIC_EP_PREFIX + "/users")
     public List<String> users() {
         return userManager.getAllUsers();
