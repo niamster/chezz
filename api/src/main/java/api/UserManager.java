@@ -19,6 +19,9 @@ public class UserManager {
 
     public boolean verifyUser(String username, String password) {
         UserStore.UserMeta meta = store.getUser(username);
+        if (meta == null) {
+            return false;
+        }
         return keyWhitener.verify(password, meta.hash);
     }
 
