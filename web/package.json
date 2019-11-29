@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {},
   "scripts": {
-    "dev": "webpack-dev-server --hot --mode development --display-error-details --port 8000",
-    "build": "webpack --mode production"
+    "dev": "webpack-dev-server --hot --mode development --env.ENVIRONMENT=dev --display-error-details --port 8000",
+    "build": "webpack --mode production --env.ENVIRONMENT=prod"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -28,6 +28,7 @@
     "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "dotenv": "^8.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.12.0",
