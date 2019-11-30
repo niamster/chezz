@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
+import 'css/index.css';
 
 class Index extends React.Component {
   render() {
@@ -14,8 +14,4 @@ class Index extends React.Component {
 }
 
 // ========================================
-
-ReactDOM.render(
-  <Index />,
-  document.getElementById('root')
-);
+ReactDOM.render(<Index />, document.getElementById('root'));

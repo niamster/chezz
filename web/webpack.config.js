@@ -3,6 +3,15 @@ const dotenv = require('dotenv');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const fs = require('fs');
 const path = require('path');
+var glob = require("glob");
+
+let htmlPagesDir = path.join(__dirname) + "/src/pages/";
+let htmlPages = glob.sync("*.html", {cwd: htmlPagesDir}).map(function(entry) {
+  return new HtmlWebPackPlugin({
+    filename: entry,
+    template: htmlPagesDir + entry,
+  })
+})
 
 module.exports = (env) => {
   const envFileName = '.env.' + env.ENVIRONMENT;
@@ -49,10 +58,12 @@ module.exports = (env) => {
     },
     plugins: [
       new webpack.DefinePlugin(envKeys),
-      new HtmlWebPackPlugin({
-        template: "./src/index.html",
-        filename: "./index.html"
-      })
-    ]
+    ].concat(htmlPages),
+    resolve: {
+      alias: {
+        components: path.resolve(__dirname, "src", "components"),
+        css: path.resolve(__dirname, "src", "css"),
+      }
+    },
   }
 };
