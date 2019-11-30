@@ -78,9 +78,21 @@ public class UserController {
         return userManager.getAllUsers();
     }
 
+    static class UserInfoReply {
+
+        public String username;
+        public String email;
+
+        public UserInfoReply(String username, String email) {
+            this.username = username;
+            this.email = email;
+        }
+    }
+
     @GetMapping(APISecurity.PROTECTED_EP_PREFIX + "/user/info")
-    public String users(@RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken) {
+    public UserInfoReply users(@RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken) {
         String username = userTokenStore.getUser(userToken);
-        return userManager.getUserInfo(username).email;
+        String email = userManager.getUserInfo(username).email;
+        return new UserInfoReply(username, email);
     }
 }
