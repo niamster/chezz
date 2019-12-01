@@ -1,0 +1,13 @@
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  margin-bottom: 2mm;
+  padding: 0;
+  padding-bottom: 2mm;
+  border-bottom: solid;
+}
+
+.menu ul li {
+  padding-left: 2mm;
+  display: inline;
+}

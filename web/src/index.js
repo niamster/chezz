@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import 'css/index.css';
+import Menu from 'components/menu';
+import Index from 'components/index';
 
-class Index extends React.Component {
-  render() {
-    return (
-      <div className="greeting">
-        Wellcome!
-      </div>
-    );
-  }
-}
-
-// ========================================
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(
+  <BrowserRouter>
+    <Menu />
+    <Index />
+  </BrowserRouter>,
+  document.getElementById('root')
+);

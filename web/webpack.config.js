@@ -56,6 +56,9 @@ module.exports = (env) => {
         }
       ]
     },
+    devServer: {
+      historyApiFallback: true,
+    },
     plugins: [
       new webpack.DefinePlugin(envKeys),
     ].concat(htmlPages),
