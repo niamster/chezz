@@ -1,15 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
+import Pages from 'pages/pages';
+
 import css from 'css/menu.css';
 
 export default function Menu() {
   return (
     <div className="menu">
       <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/signin">Signin</Link></li>
-        <li><Link to="/signup">Signup</Link></li>
+        {Pages().map((page, index) => (
+          <li key={index}>
+            <Link to={page.path()}>
+              {page.title()}
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
