@@ -33,11 +33,11 @@ class HomeInternal {
 
 export default class Home {
   path() {
-    return "/";
+    return '/';
   }
 
   title() {
-    return "Home";
+    return 'Home';
   }
 
   isMenuActive() {

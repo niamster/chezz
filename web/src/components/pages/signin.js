@@ -2,11 +2,11 @@ import React from 'react';
 
 export default class Signin {
   path() {
-    return "/signin";
+    return '/signin';
   }
 
   title() {
-    return "Signin";
+    return 'Signin';
   }
 
   isMenuActive() {

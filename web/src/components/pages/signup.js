@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Form } from "react-bootstrap";
+import { Button, Form } from 'react-bootstrap';
 import UserAPI from 'api/UserAPI';
 
 import 'css/login.css';
 
 export function SignupForm(props) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   function validateForm() {
     return username.length > 0 && email.length > 0 && password.length > 0;
@@ -15,10 +15,10 @@ export function SignupForm(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    let userApi = new UserAPI();
+    const userApi = new UserAPI();
     userApi.signup(username, email, password).then(response => {
       // TODO: redirect to root
-    }).catch(err =>{
+    }).catch(err => {
       // TODO: error handling
       console.log(err);
     });
@@ -63,11 +63,11 @@ export function SignupForm(props) {
 
 export default class Signup {
   path() {
-    return "/signup";
+    return '/signup';
   }
 
   title() {
-    return "Signup";
+    return 'Signup';
   }
 
   isMenuActive() {

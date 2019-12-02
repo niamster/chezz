@@ -1,17 +1,17 @@
 const webpack = require('webpack');
 const dotenv = require('dotenv');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
-var glob = require("glob");
+var glob = require('glob');
 
-let htmlPagesDir = path.join(__dirname) + "/src/pages/";
-let htmlPages = glob.sync("*.html", {cwd: htmlPagesDir}).map(function(entry) {
+const htmlPagesDir = path.join(__dirname) + '/src/pages/';
+const htmlPages = glob.sync('*.html', { cwd: htmlPagesDir }).map(function (entry) {
   return new HtmlWebPackPlugin({
     filename: entry,
     template: htmlPagesDir + entry,
-  })
-})
+  });
+});
 
 module.exports = (env) => {
   const envFileName = '.env.' + env.ENVIRONMENT;
@@ -32,14 +32,14 @@ module.exports = (env) => {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader"
+            loader: 'babel-loader'
           }
         },
         {
           test: /\.html$/,
           use: [
             {
-              loader: "html-loader"
+              loader: 'html-loader'
             }
           ]
         },
@@ -47,10 +47,10 @@ module.exports = (env) => {
           test: /\.css$/,
           use: [
             {
-              loader: "style-loader"
+              loader: 'style-loader'
             },
             {
-              loader: "css-loader"
+              loader: 'css-loader'
             }
           ]
         }
@@ -64,11 +64,11 @@ module.exports = (env) => {
     ].concat(htmlPages),
     resolve: {
       alias: {
-        api: path.resolve(__dirname, "src", "api"),
-        components: path.resolve(__dirname, "src", "components"),
-        pages: path.resolve(__dirname, "src", "components", "pages"),
-        css: path.resolve(__dirname, "src", "css"),
+        api: path.resolve(__dirname, 'src', 'api'),
+        components: path.resolve(__dirname, 'src', 'components'),
+        pages: path.resolve(__dirname, 'src', 'components', 'pages'),
+        css: path.resolve(__dirname, 'src', 'css'),
       }
     },
-  }
+  };
 };

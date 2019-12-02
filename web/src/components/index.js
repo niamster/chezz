@@ -3,9 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 
 import Pages from 'pages/pages';
 
-import css from 'css/index.css';
+import 'css/index.css';
 
-export default function Index () {
+export default function Index() {
   return (
     <Switch>
       {Pages().map((page, index) => (
