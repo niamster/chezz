@@ -9,6 +9,10 @@ export default class Signin {
     return "Signin";
   }
 
+  isMenuActive() {
+    return true;
+  }
+
   render() {
     return (
       <div>

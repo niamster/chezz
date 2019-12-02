@@ -64,6 +64,7 @@ module.exports = (env) => {
     ].concat(htmlPages),
     resolve: {
       alias: {
+        api: path.resolve(__dirname, "src", "api"),
         components: path.resolve(__dirname, "src", "components"),
         pages: path.resolve(__dirname, "src", "components", "pages"),
         css: path.resolve(__dirname, "src", "css"),
