@@ -1,11 +1,7 @@
 import React from 'react';
-import UserAPI from 'api/UserAPI';
+import { userAPI } from 'api';
 
 class HomeInternal {
-  constructor() {
-    this.userApi = new UserAPI();
-  }
-
   renderForAnonymous() {
     return (
       <div>
@@ -23,7 +19,7 @@ class HomeInternal {
   }
 
   render() {
-    const username = this.userApi.getUserName();
+    const username = userAPI.getUserName();
     if (username) {
       return this.renderForUser(username);
     }
