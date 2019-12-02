@@ -1,15 +1,11 @@
-import Api from './API';
+import { api } from '.';
 
 export default class UserAPI {
-  constructor() {
-    this.api = new Api();
-  }
-
   getUserName() {
     let username = '';
     try {
       username = this.getUserInfo().username;
-    } finally {
+    } catch (err) {
     }
     return username;
   }
@@ -25,17 +21,22 @@ export default class UserAPI {
     }));
   }
 
+  resetUserInfo() {
+    localStorage.removeItem('user_info');
+  }
+
   signup(username, email, password) {
     const data = {
       username: username,
       email: email,
       password: password,
     };
-    return this.api.post('/public/signup', data).then(response => {
+    return api.post('/public/signup', data).then(response => {
       if (response.status !== 'ok') {
         throw new Error(`Failed to signup: "${response.status}"`);
       }
       this.setUserInfo(username, response.token);
+      api.setUserToken(response.token);
       return Promise.resolve(username);
     });
   }
@@ -45,11 +46,12 @@ export default class UserAPI {
       username: username,
       password: password,
     };
-    return this.api.post('/public/signin', data).then(response => {
+    return api.post('/public/signin', data).then(response => {
       if (response.status !== 'ok') {
         throw new Error(`Failed to signin: "${response.status}"`);
       }
       this.setUserInfo(username, response.token);
+      api.setUserToken(response.token);
       return Promise.resolve(username);
     });
   }

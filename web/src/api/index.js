@@ -1,6 +1,5 @@
 import UserAPI from './UserAPI';
+import API from './API';
 
-const userAPI = new UserAPI();
-export {
-  userAPI,
-};
+export const api = new API();
+export const userAPI = new UserAPI();
