@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Pages from 'pages/pages';
 
@@ -11,6 +11,9 @@ export default function Index() {
       {Pages().map((page, index) => (
         <Route key={index} exact path={page.path()} component={page.render} />
       ))}
+      <Route path="*">
+        <Redirect to="/" />
+      </Route>
     </Switch>
   );
 }
