@@ -55,4 +55,19 @@ export default class UserAPI {
       return Promise.resolve(username);
     });
   }
+
+  signout() {
+    const userInfo = this.getUserInfo();
+    this.resetUserInfo();
+    if (!userInfo || !userInfo.token) {
+      return;
+    }
+    const data = {
+      user_token: userInfo.token,
+    };
+    return api.get('/protected/signout', data).finally(() => {
+      api.resetUserToken();
+      return Promise.resolve();
+    });
+  }
 }
