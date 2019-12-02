@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { userAPI } from 'api';
 
 import 'css/login.css';
@@ -8,6 +8,10 @@ export function SignupForm(props) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showFailure, setShowFailure] = useState(false);
+  const [failReason, setFailReason] = useState('');
+
+  const handleCloseFailure = () => setShowFailure(false);
 
   function validateForm() {
     return username.length > 0 && email.length > 0 && password.length > 0;
@@ -19,6 +23,8 @@ export function SignupForm(props) {
       // TODO: redirect to root
     }).catch(err => {
       // TODO: error handling
+      setFailReason('unknown');
+      setShowFailure(true);
       console.log(err);
     });
   }
@@ -56,6 +62,18 @@ export function SignupForm(props) {
           Login
         </Button>
       </Form>
+
+      <Modal show={showFailure} onHide={handleCloseFailure}>
+        <Modal.Header closeButton>
+          <Modal.Title>Failed to signup!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Reason: {failReason}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseFailure}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
