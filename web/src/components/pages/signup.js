@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { userAPI } from 'api';
 
 import 'css/login.css';
 
-export function SignupForm(props) {
+function SignupForm() {
+  const history = useHistory();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +22,7 @@ export function SignupForm(props) {
   function handleSubmit(event) {
     event.preventDefault();
     userAPI.signup(username, email, password).then(response => {
-      // TODO: redirect to root
+      history.push('/');
     }).catch(err => {
       // TODO: error handling
       setFailReason('unknown');
