@@ -36,7 +36,7 @@ export default class UserAPI {
         throw new Error(`Failed to signup: "${response.status}"`);
       }
       this.setUserInfo(username, response.token);
-      return username;
+      return Promise.resolve(username);
     });
   }
 }
