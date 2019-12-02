@@ -39,4 +39,18 @@ export default class UserAPI {
       return Promise.resolve(username);
     });
   }
+
+  signin(username, password) {
+    const data = {
+      username: username,
+      password: password,
+    };
+    return this.api.post('/public/signin', data).then(response => {
+      if (response.status !== 'ok') {
+        throw new Error(`Failed to signin: "${response.status}"`);
+      }
+      this.setUserInfo(username, response.token);
+      return Promise.resolve(username);
+    });
+  }
 }
