@@ -7,7 +7,7 @@ import 'css/menu.css';
 
 export default function Menu() {
   return (
-    <div className="menu">
+    <div className="Menu">
       <ul>
         {Pages().filter(page => page.isMenuActive())
           .map((page, index) => (
