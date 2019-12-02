@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Pages from 'pages/pages';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'css/index.css';
 
 export default function Index() {
