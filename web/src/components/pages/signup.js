@@ -23,6 +23,7 @@ function SignupForm() {
     event.preventDefault();
     userAPI.signup(username, email, password).then(response => {
       history.push('/');
+      location.reload();
     }).catch(err => {
       // TODO: error handling
       setFailReason('unknown');
@@ -90,7 +91,7 @@ export default class Signup {
   }
 
   isMenuActive() {
-    return true;
+    return !userAPI.isSignedIn();
   }
 
   render() {

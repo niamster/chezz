@@ -10,6 +10,7 @@ function SignoutForm() {
     event.preventDefault();
     userAPI.signout().finally(() => {
       history.push('/');
+      location.reload();
     });
   }
 
@@ -32,7 +33,7 @@ export default class Signout {
   }
 
   isMenuActive() {
-    return true;
+    return userAPI.isSignedIn();
   }
 
   render() {

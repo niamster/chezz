@@ -25,6 +25,14 @@ export default class UserAPI {
     localStorage.removeItem('user_info');
   }
 
+  isSignedIn() {
+    const username = this.getUserName();
+    if (!username || username.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   signup(username, email, password) {
     const data = {
       username: username,

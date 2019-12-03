@@ -22,6 +22,7 @@ function SigninForm() {
     event.preventDefault();
     userAPI.signin(username, password).then(response => {
       history.push('/');
+      location.reload();
     }).catch(err => {
       // TODO: error handling
       setFailReason('unknown');
@@ -80,7 +81,7 @@ export default class Signin {
   }
 
   isMenuActive() {
-    return true;
+    return !userAPI.isSignedIn();
   }
 
   render() {
