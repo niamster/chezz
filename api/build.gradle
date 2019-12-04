@@ -23,7 +23,7 @@ bootJar {
 
     def prop = new Properties()
     prop.setProperty("version", archiveVersion.get())
-    def propFile = new File("${project.rootDir}/src/main/resources/app.properties");
+    def propFile = new File("${project.projectDir}/src/main/resources/app.properties");
     propFile.createNewFile();
     prop.store(propFile.newWriter(), null);
     println ""
@@ -48,3 +48,15 @@ dependencies {
     implementation("commons-codec:commons-codec:1.13")
 }
 
+bootRun.dependsOn "verifyGoogleJavaFormat"
+bootJar.dependsOn "verifyGoogleJavaFormat"
+
+task runDev(type: Exec) {
+  dependsOn "verifyGoogleJavaFormat"
+  executable = "gradle"
+  args = ["bootRun", "--args='--spring.config.location=file:./config/configuration.yaml'"]
+}
+
+task buildProd() {
+  dependsOn "bootJar"
+}
