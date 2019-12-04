@@ -5,11 +5,11 @@ import org.apache.commons.codec.binary.Hex;
 
 public class UserTokenGeneratorSimple implements UserTokenGenerator {
 
-    private final SecureRandom rng = new SecureRandom();
+  private final SecureRandom rng = new SecureRandom();
 
-    public String generateToken(String username) {
-        byte[] random = new byte[16];
-        rng.nextBytes(random);
-        return Hex.encodeHexString(random);
-    }
+  public String generateToken(String username) {
+    byte[] random = new byte[16];
+    rng.nextBytes(random);
+    return Hex.encodeHexString(random);
+  }
 }

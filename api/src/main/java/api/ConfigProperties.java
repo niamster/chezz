@@ -10,10 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties
 public class ConfigProperties {
 
-    @Autowired
-    private ConfigSecurityProperties securityProperties;
+  @Autowired private ConfigSecurityProperties securityProperties;
 
-    public ConfigSecurityProperties getSecurityProperties() {
-        return securityProperties;
-    }
+  public ConfigSecurityProperties getSecurityProperties() {
+    return securityProperties;
+  }
 }

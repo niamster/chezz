@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VersionController {
 
-    private String appVersion;
+  private String appVersion;
 
-    public VersionController() {
-        try (InputStream input = new FileInputStream("src/main/resources/app.properties")) {
-            Properties prop = new Properties();
-            prop.load(input);
-            appVersion = prop.getProperty("version");
-        } catch (IOException ex) {
-            appVersion = "0.0.0";
-        }
+  public VersionController() {
+    try (InputStream input = new FileInputStream("src/main/resources/app.properties")) {
+      Properties prop = new Properties();
+      prop.load(input);
+      appVersion = prop.getProperty("version");
+    } catch (IOException ex) {
+      appVersion = "0.0.0";
     }
+  }
 
-    @RequestMapping(APISecurity.PUBLIC_EP_PREFIX + "/version")
-    public Version version() {
-        return new Version(appVersion);
-    }
+  @RequestMapping(APISecurity.PUBLIC_EP_PREFIX + "/version")
+  public Version version() {
+    return new Version(appVersion);
+  }
 }

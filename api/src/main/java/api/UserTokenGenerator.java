@@ -2,5 +2,5 @@ package api;
 
 public interface UserTokenGenerator {
 
-    public String generateToken(String username);
+  public String generateToken(String username);
 }

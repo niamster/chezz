@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("security")
 public class ConfigSecurityProperties {
 
-    @Value("${key_whitener:bcrypt}")
-    private String keyWhitener;
+  @Value("${key_whitener:bcrypt}")
+  private String keyWhitener;
 
-    public void setKeyWhitener(String keyWhitener) {
-        this.keyWhitener = keyWhitener;
-    }
+  public void setKeyWhitener(String keyWhitener) {
+    this.keyWhitener = keyWhitener;
+  }
 
-    public String getKeyWhitener() {
-        return keyWhitener;
-    }
+  public String getKeyWhitener() {
+    return keyWhitener;
+  }
 }
