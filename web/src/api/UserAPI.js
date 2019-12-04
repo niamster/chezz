@@ -1,38 +1,6 @@
 import { api } from '.';
 
 export default class UserAPI {
-  getUserName() {
-    let username = '';
-    try {
-      username = this.getUserInfo().username;
-    } catch (err) {
-    }
-    return username;
-  }
-
-  getUserInfo() {
-    return JSON.parse(localStorage.getItem('user_info'));
-  }
-
-  setUserInfo(username, token) {
-    localStorage.setItem('user_info', JSON.stringify({
-      username: username,
-      token: token,
-    }));
-  }
-
-  resetUserInfo() {
-    localStorage.removeItem('user_info');
-  }
-
-  isSignedIn() {
-    const username = this.getUserName();
-    if (!username || username.length === 0) {
-      return false;
-    }
-    return true;
-  }
-
   signup(username, email, password) {
     const data = {
       username: username,
@@ -43,9 +11,7 @@ export default class UserAPI {
       if (response.status !== 'ok') {
         throw new Error(`Failed to signup: "${response.status}"`);
       }
-      this.setUserInfo(username, response.token);
-      api.setUserToken(response.token);
-      return Promise.resolve(username);
+      return Promise.resolve([username, response.token]);
     });
   }
 
@@ -58,23 +24,15 @@ export default class UserAPI {
       if (response.status !== 'ok') {
         throw new Error(`Failed to signin: "${response.status}"`);
       }
-      this.setUserInfo(username, response.token);
-      api.setUserToken(response.token);
-      return Promise.resolve(username);
+      return Promise.resolve([username, response.token]);
     });
   }
 
-  signout() {
-    const userInfo = this.getUserInfo();
-    this.resetUserInfo();
-    if (!userInfo || !userInfo.token) {
+  signout(token) {
+    if (!token) {
       return;
     }
-    const data = {
-      user_token: userInfo.token,
-    };
-    return api.get('/protected/signout', data).finally(() => {
-      api.resetUserToken();
+    return api.get('/protected/signout', null, token).finally(() => {
       return Promise.resolve();
     });
   }

@@ -1,11 +1,15 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Modal } from 'react-bootstrap';
+
 import { userAPI } from 'api';
+import { setUser } from 'components/state/user';
 
 import 'css/login.css';
 
-function SignupForm() {
+function component(props) {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -22,8 +26,9 @@ function SignupForm() {
   function handleSubmit(event) {
     event.preventDefault();
     userAPI.signup(username, email, password).then(response => {
+      const [username, token] = response;
+      props.setUser(username, token);
       history.push('/');
-      location.reload();
     }).catch(err => {
       // TODO: error handling
       setFailReason('unknown');
@@ -81,6 +86,21 @@ function SignupForm() {
   );
 }
 
+component.propTypes = {
+  setUser: PropTypes.func,
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setUser: (username, token) => dispatch(setUser(username, token)),
+  };
+}
+
+const SignupComponent = connect(
+  null,
+  mapDispatchToProps
+)(component);
+
 export default class Signup {
   path() {
     return '/signup';
@@ -90,14 +110,14 @@ export default class Signup {
     return 'Signup';
   }
 
-  isMenuActive() {
-    return !userAPI.isSignedIn();
+  enabled(state) {
+    return !state.user.signedIn;
   }
 
   render() {
     return (
       <div>
-        <SignupForm />
+        <SignupComponent />
       </div>
     );
   }

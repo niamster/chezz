@@ -1,31 +1,33 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { userAPI } from 'api';
+import { connect } from 'react-redux';
 
-class HomeInternal {
-  renderForAnonymous() {
+function component(props) {
+  if (props.user.signedIn) {
     return (
       <div>
-        Hello!
+        Welcome back, <b>{props.user.username}</b>!
       </div>
     );
   }
-
-  renderForUser(username) {
-    return (
-      <div>
-        Welcome back, <b>{username}</b>!
-      </div>
-    );
-  }
-
-  render() {
-    const username = userAPI.getUserName();
-    if (username) {
-      return this.renderForUser(username);
-    }
-    return this.renderForAnonymous();
-  }
+  return (
+    <div>
+      Hello!
+    </div>
+  );
 }
+
+component.propTypes = {
+  user: PropTypes.object,
+};
+
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+const HomeComponent = connect(mapStateToProps)(component);
 
 export default class Home {
   path() {
@@ -36,12 +38,13 @@ export default class Home {
     return 'Home';
   }
 
-  isMenuActive() {
+  enabled(props) {
     return true;
   }
 
   render() {
-    const home = new HomeInternal();
-    return home.render();
+    return (
+      <HomeComponent />
+    );
   }
 }

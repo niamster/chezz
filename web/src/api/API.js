@@ -3,33 +3,24 @@ import 'url-search-params-polyfill';
 export default class API {
   constructor() {
     this.base = process.env.API_URL;
-    this.userToken = null;
   }
 
-  setUserToken(token) {
-    this.userToken = token;
-  }
-
-  resetUserToken() {
-    this.setUserToken(null);
-  }
-
-  params(params) {
-    if (!params || !this.userToken) {
+  params(params, token) {
+    if (!params && !token) {
       return '';
     }
     const query = new URLSearchParams();
-    for (const [k, v] of Object.entries(params)) {
+    for (const [k, v] of Object.entries(params || {})) {
       query.append(k, v);
     }
-    if (this.userToken) {
-      query.append('user_token', this.userToken);
+    if (token) {
+      query.append('user_token', token);
     }
     return '?' + query.toString();
   }
 
-  get(path, params) {
-    return fetch(this.base + path + this.params(params), {
+  get(path, params, token = '') {
+    return fetch(this.base + path + this.params(params, token), {
       method: 'GET',
     }).then(response => {
       if (!response.ok) {
@@ -39,8 +30,8 @@ export default class API {
     });
   }
 
-  post(path, data, params) {
-    return fetch(this.base + path + this.params(params), {
+  post(path, data, params, token = '') {
+    return fetch(this.base + path + this.params(params, token), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

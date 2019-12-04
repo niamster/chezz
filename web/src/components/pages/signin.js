@@ -1,11 +1,15 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Modal } from 'react-bootstrap';
+
 import { userAPI } from 'api';
+import { setUser } from 'components/state/user';
 
 import 'css/login.css';
 
-function SigninForm() {
+function component(props) {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +25,9 @@ function SigninForm() {
   function handleSubmit(event) {
     event.preventDefault();
     userAPI.signin(username, password).then(response => {
+      const [username, token] = response;
+      props.setUser(username, token);
       history.push('/');
-      location.reload();
     }).catch(err => {
       // TODO: error handling
       setFailReason('unknown');
@@ -71,6 +76,21 @@ function SigninForm() {
   );
 }
 
+component.propTypes = {
+  setUser: PropTypes.func,
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setUser: (username, token) => dispatch(setUser(username, token)),
+  };
+}
+
+const SigninComponent = connect(
+  null,
+  mapDispatchToProps
+)(component);
+
 export default class Signin {
   path() {
     return '/signin';
@@ -80,14 +100,14 @@ export default class Signin {
     return 'Signin';
   }
 
-  isMenuActive() {
-    return !userAPI.isSignedIn();
+  enabled(state) {
+    return !state.user.signedIn;
   }
 
   render() {
     return (
       <div>
-        <SigninForm />
+        <SigninComponent />
       </div>
     );
   }
