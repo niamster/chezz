@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Pages from 'pages/pages';
+import Pages from 'pages';
 
 import 'css/menu.css';
 

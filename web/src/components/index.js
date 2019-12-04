@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import Pages from 'pages/pages';
+import Pages from 'pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'css/index.css';
