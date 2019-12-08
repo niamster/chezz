@@ -4,6 +4,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 var glob = require('glob');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const htmlPagesDir = path.join(__dirname) + '/src/pages/';
 const htmlPages = glob.sync('*.html', { cwd: htmlPagesDir }).map(function (entry) {
@@ -61,6 +62,7 @@ module.exports = (env) => {
     },
     plugins: [
       new webpack.DefinePlugin(envKeys),
+      new CleanWebpackPlugin(),
     ].concat(htmlPages),
     resolve: {
       alias: {
