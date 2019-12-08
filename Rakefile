@@ -59,8 +59,9 @@ multitask :run_dev => APPS.map {|app| "#{app}:run_dev".to_sym}
 
 desc "build production version"
 task :build_prod, [:output] do |_, args|
+  dest = args.output || Pathname.new(File.dirname(__FILE__)).join("dist")
   APPS.each do |app|
-    output = Pathname.new(args.output).join app if args.output
+    output = Pathname.new(dest).join app if dest
     Rake::Task["#{app}:build_prod"].invoke output
   end
 end
