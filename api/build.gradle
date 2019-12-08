@@ -30,6 +30,11 @@ bootJar {
     println "Build output: " + relativePath(jar.destinationDirectory) + "/" + archiveName
 }
 
+compileJava {
+    options.compilerArgs << "-Xlint:all"
+    options.compilerArgs << "-Werror"
+}
+
 repositories {
     mavenCentral()
 }
