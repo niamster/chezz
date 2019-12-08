@@ -1,0 +1,33 @@
+def npm(*args)
+  trap('SIGINT') {  exit }
+  sh "npm", *args
+end
+
+def eslint(*args)
+  trap('SIGINT') {  exit }
+  sh "eslint", *args
+end
+
+task :bootstrap do
+  npm "install"
+end
+
+desc "check the code"
+task :check => :bootstrap do
+  eslint "src", "webpack.config.js"
+end
+
+desc "fix the code"
+task :fix => :bootstrap do
+  eslint "--fix", "src", "webpack.config.js"
+end
+
+desc "run development version"
+task :run_dev => :check do
+  npm "run", "dev"
+end
+
+desc "build production version"
+task :build_prod => :check do
+  npm "run", "build"
+end

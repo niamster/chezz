@@ -1,3 +1,0 @@
-rootProject.name = "chess"
-
-include "api", "web"

@@ -1,0 +1,27 @@
+def gradle(*args)
+  trap('SIGINT') {  exit }
+  sh "./gradlew", *args
+end
+
+task :bootstrap do
+end
+
+desc "check the code"
+task :check => :bootstrap do
+  gradle "verGJF"
+end
+
+desc "fix the code"
+task :fix => :bootstrap do
+  gradle "goGJF"
+end
+
+desc "run development version"
+task :run_dev => :check do
+  gradle "bootRun", "--args='--spring.config.location=file:./config/configuration.yaml'"
+end
+
+desc "build production version"
+task :build_prod => :check do
+  gradle "bootJar"
+end

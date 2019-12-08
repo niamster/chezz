@@ -47,16 +47,3 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("commons-codec:commons-codec:1.13")
 }
-
-bootRun.dependsOn "verifyGoogleJavaFormat"
-bootJar.dependsOn "verifyGoogleJavaFormat"
-
-task runDev(type: Exec) {
-  dependsOn "verifyGoogleJavaFormat"
-  executable = "gradle"
-  args = ["bootRun", "--args='--spring.config.location=file:./config/configuration.yaml'"]
-}
-
-task buildProd() {
-  dependsOn "bootJar"
-}
