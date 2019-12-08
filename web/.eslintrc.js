@@ -21,6 +21,7 @@ module.exports = {
   plugins: [
     'react'
   ],
+  parser: "babel-eslint",
   rules: {
     'semi': ['error', 'always'],
     'indent': ['error', 2],
