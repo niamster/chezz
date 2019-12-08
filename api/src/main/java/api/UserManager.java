@@ -1,5 +1,7 @@
 package api;
 
+import chezz.datastore.UserMeta;
+import chezz.datastore.UserStore;
 import java.util.*;
 
 public class UserManager {
@@ -14,11 +16,11 @@ public class UserManager {
 
   public boolean addUser(String username, String email, String password) {
     String hash = keyWhitener.hash(password);
-    return store.addUser(username, new UserStore.UserMeta(email, hash));
+    return store.addUser(username, new UserMeta(email, hash));
   }
 
   public boolean verifyUser(String username, String password) {
-    UserStore.UserMeta meta = store.getUser(username);
+    UserMeta meta = store.getUser(username);
     if (meta == null) {
       return false;
     }
@@ -29,7 +31,7 @@ public class UserManager {
     return store.getAllUsers();
   }
 
-  public UserStore.UserMeta getUserInfo(String username) {
+  public UserMeta getUserInfo(String username) {
     return store.getUser(username);
   }
 }
