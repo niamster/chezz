@@ -2,5 +2,5 @@ package chezz.users;
 
 public interface UserTokenGenerator {
 
-  public String generateToken(String username);
+  String generateToken(String username);
 }

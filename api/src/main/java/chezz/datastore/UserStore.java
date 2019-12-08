@@ -4,9 +4,9 @@ import java.util.*;
 
 public interface UserStore {
 
-  public boolean addUser(String username, UserMeta meta);
+  boolean addUser(String username, UserMeta meta);
 
-  public UserMeta getUser(String username);
+  UserMeta getUser(String username);
 
-  public List<String> getAllUsers();
+  List<String> getAllUsers();
 }
