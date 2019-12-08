@@ -1,14 +1,14 @@
-package api;
+package chezz.datastore;
 
 import java.util.*;
 import java.util.concurrent.locks.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class UserStoreMem implements UserStore {
+public class UserStoreMem implements UserStore {
 
   private final Logger logger = LogManager.getLogger(UserStoreMem.class);
-  private final Map<String, UserStore.UserMeta> store = new HashMap<String, UserStore.UserMeta>();
+  private final Map<String, UserMeta> store = new HashMap<String, UserMeta>();
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
   private final Lock rLock = lock.readLock();
   private final Lock wLock = lock.writeLock();

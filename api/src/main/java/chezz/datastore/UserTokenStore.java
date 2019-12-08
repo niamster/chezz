@@ -1,4 +1,4 @@
-package api;
+package chezz.datastore;
 
 public interface UserTokenStore {
 
