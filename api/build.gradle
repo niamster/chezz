@@ -19,7 +19,7 @@ apply plugin: 'io.spring.dependency-management'
 
 bootJar {
     archiveBaseName = 'chess'
-    archiveVersion = '0.0.1'
+    archiveVersion = rootProject.file("version").text.trim()
 
     def prop = new Properties()
     prop.setProperty("version", archiveVersion.get())

@@ -28,6 +28,12 @@ task :run_dev => :check do
 end
 
 desc "build production version"
-task :build_prod => :check do
+task :build_prod, [:output] => :check do |_, args|
   npm "run", "build"
+  if args.output
+    FileUtils.mkdir_p args.output
+    Dir["dist/*"].each do |f|
+      FileUtils.cp_r f, args.output
+    end
+  end
 end

@@ -22,6 +22,11 @@ task :run_dev => :check do
 end
 
 desc "build production version"
-task :build_prod => :check do
+task :build_prod, [:output] => :check do |_, args|
   gradle "bootJar"
+  if args.output
+    FileUtils.mkdir_p args.output
+    version = File.open("version").read.strip
+    FileUtils.cp "build/libs/chess-#{version}.jar", args.output
+  end
 end

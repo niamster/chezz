@@ -1,3 +1,5 @@
+require "pathname"
+
 APPS = ["web", "api"]
 
 Rake::TaskManager.record_task_metadata = true
@@ -56,4 +58,9 @@ desc "run development version"
 multitask :run_dev => APPS.map {|app| "#{app}:run_dev".to_sym}
 
 desc "build production version"
-task :build_prod => APPS.map {|app| "#{app}:build_prod".to_sym}
+task :build_prod, [:output] do |_, args|
+  APPS.each do |app|
+    output = Pathname.new(args.output).join app if args.output
+    Rake::Task["#{app}:build_prod"].invoke output
+  end
+end
