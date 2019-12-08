@@ -1,4 +1,4 @@
-package api;
+package chezz.users;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 

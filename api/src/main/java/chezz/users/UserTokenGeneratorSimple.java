@@ -1,4 +1,4 @@
-package api;
+package chezz.users;
 
 import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Hex;

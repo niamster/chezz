@@ -1,6 +1,6 @@
-package api;
+package chezz.users;
 
-interface KeyWhitener {
+public interface KeyWhitener {
 
   public String hash(String key);
 
