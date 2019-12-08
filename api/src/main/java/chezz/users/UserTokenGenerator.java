@@ -1,4 +1,4 @@
-package api;
+package chezz.users;
 
 public interface UserTokenGenerator {
 

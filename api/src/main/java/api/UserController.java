@@ -1,6 +1,8 @@
 package api;
 
 import chezz.datastore.UserTokenStore;
+import chezz.users.UserManager;
+import chezz.users.UserTokenGenerator;
 import java.util.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

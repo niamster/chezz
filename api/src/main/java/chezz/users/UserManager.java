@@ -1,4 +1,4 @@
-package api;
+package chezz.users;
 
 import chezz.datastore.UserMeta;
 import chezz.datastore.UserStore;
