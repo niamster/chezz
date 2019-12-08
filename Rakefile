@@ -15,10 +15,10 @@ APPS.each do |app|
     ns.tasks.each do |app_task|
       next if app_task.full_comment.nil? || app_task.full_comment.empty?
       desc app_task.full_comment
-      task app_task.name[ns_name.length+1..-1] do |_, args|
+      task app_task.name[ns_name.length+1..-1], app_task.arg_names do |_, args|
         pid = Process.fork do
-            Dir.chdir(app) do
-            app_task.invoke args
+          Dir.chdir(app) do
+            app_task.invoke *args
           end
         end
         Process.wait pid
