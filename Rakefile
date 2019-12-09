@@ -57,6 +57,9 @@ end
 desc "run development version"
 multitask :run_dev => APPS.map {|app| "#{app}:run_dev".to_sym}
 
+desc "test"
+task :test => APPS.map {|app| "#{app}:test".to_sym}
+
 desc "build production version"
 task :build_prod, [:output] do |_, args|
   dest = args.output || Pathname.new(File.dirname(__FILE__)).join("dist")

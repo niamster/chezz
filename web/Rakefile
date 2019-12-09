@@ -22,6 +22,10 @@ task :fix => :bootstrap do
   eslint "--fix", "src", "webpack.config.js"
 end
 
+desc "test the code"
+task :test => :bootstrap do
+end
+
 desc "run development version"
 task :run_dev => :check do
   npm "run", "dev"
