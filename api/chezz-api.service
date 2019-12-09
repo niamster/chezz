@@ -1,0 +1,15 @@
+[Unit]
+Description=Chess API
+After=syslog.target network.target
+User=www-data
+Type=simple
+
+[Service]
+ExecStart=/usr/bin/java -Xmx64m -Xms64m -Xss256k -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar /opt/chezz/api/chezz-latest.jar --server.port=8081
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=chezz-api
+
+[Install]
+WantedBy=multi-user.target

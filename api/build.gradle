@@ -19,7 +19,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
-    archiveBaseName.set("chess")
+    archiveBaseName.set("chezz")
     archiveVersion.set(rootProject.file("version").text.trim())
 
     def prop = new Properties()

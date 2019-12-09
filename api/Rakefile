@@ -32,6 +32,6 @@ task :build_prod, [:output] => :check do |_, args|
   if args.output
     FileUtils.mkdir_p args.output
     version = File.open("version").read.strip
-    FileUtils.cp "build/libs/chess-#{version}.jar", args.output
+    FileUtils.cp "build/libs/chezz-#{version}.jar", args.output
   end
 end
