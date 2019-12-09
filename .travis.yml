@@ -1,0 +1,11 @@
+language: java
+dist: trusty
+jdk:
+  - oraclejdk8
+# W/A for Travis CI to avoid some weird install steps
+install:
+  - true
+before_script:
+  - npm i npm@latest -g
+script:
+  - rake test
