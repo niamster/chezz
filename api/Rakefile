@@ -18,7 +18,7 @@ end
 
 desc "test the code"
 task :test => :bootstrap do
-  gradle "cleanTest", "test"
+  gradle "cleanTest", "test", "jacocoTestReport"
 end
 
 desc "run development version"
