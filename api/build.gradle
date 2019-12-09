@@ -18,14 +18,14 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
-    archiveBaseName = 'chess'
-    archiveVersion = rootProject.file("version").text.trim()
+    archiveBaseName.set("chess")
+    archiveVersion.set(rootProject.file("version").text.trim())
 
     def prop = new Properties()
     prop.setProperty("version", archiveVersion.get())
-    def propFile = new File("${project.projectDir}/src/main/resources/app.properties");
-    propFile.createNewFile();
-    prop.store(propFile.newWriter(), null);
+    def propFile = new File("${project.projectDir}/src/main/resources/app.properties")
+    propFile.createNewFile()
+    prop.store(propFile.newWriter(), null)
 }
 
 compileJava {
@@ -34,10 +34,7 @@ compileJava {
 }
 
 test {
-    useJUnitPlatform {
-        includeEngines "junit-jupiter"
-        excludeEngines "junit-vintage"
-    }
+    useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
     }
