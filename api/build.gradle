@@ -26,13 +26,21 @@ bootJar {
     def propFile = new File("${project.projectDir}/src/main/resources/app.properties");
     propFile.createNewFile();
     prop.store(propFile.newWriter(), null);
-    println ""
-    println "Build output: " + relativePath(jar.destinationDirectory) + "/" + archiveName
 }
 
 compileJava {
     options.compilerArgs << "-Xlint:all"
     options.compilerArgs << "-Werror"
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines "junit-jupiter"
+        excludeEngines "junit-vintage"
+    }
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
 
 repositories {
@@ -51,4 +59,6 @@ dependencies {
     implementation("org.springframework.security:spring-security-crypto:5.2.1.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("commons-codec:commons-codec:1.13")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.2")
 }
