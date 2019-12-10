@@ -1,5 +1,5 @@
 def gradle(*args)
-  trap('SIGINT') {  exit }
+  trap('SIGINT') { exit }
   sh "./gradlew", *args
 end
 
