@@ -23,7 +23,8 @@ APPS.each do |app|
             app_task.invoke *args
           end
         end
-        Process.wait pid
+        _, status = Process.wait2 pid
+        fail if status != 0
       end
       app_task.clear_comments
     end
