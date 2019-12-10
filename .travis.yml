@@ -6,6 +6,7 @@ jdk:
 install:
   - true
 before_script:
+  - nvm install v13.2.0
   - npm i npm@6.13.1 -g
   - npm i eslint@v6.7.2 -g
 script:
