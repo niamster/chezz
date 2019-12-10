@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/niamster/chezz.svg?branch=master)](https://travis-ci.org/niamster/chezz)
+
 **CHEZZ** is an online chess game.
 
 # Status
