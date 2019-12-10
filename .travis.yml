@@ -6,8 +6,8 @@ jdk:
 install:
   - true
 before_script:
-  - npm i npm@latest -g
-  - npm i eslint -g
+  - npm i npm@6.13.1 -g
+  - npm i eslint@v6.7.2 -g
 script:
   - rake check
   - rake test
