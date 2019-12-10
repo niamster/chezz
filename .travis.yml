@@ -5,9 +5,6 @@ jdk:
 # W/A for Travis CI to avoid some weird install steps
 install:
   - true
-before_script:
-  - npm i npm@6.13.1 -g
-  - npm i eslint@v6.7.2 -g
 script:
-  - rake check
-  - rake test
+  - rake api:check
+  - rake api:test
