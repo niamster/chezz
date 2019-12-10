@@ -7,6 +7,7 @@ install:
   - true
 before_script:
   - npm i npm@latest -g
+  - npm i eslint -g
 script:
   - rake check
   - rake test
