@@ -57,6 +57,9 @@ end
 desc "run development version"
 multitask :run_dev => APPS.map {|app| "#{app}:run_dev".to_sym}
 
+desc "check"
+task :check => APPS.map {|app| "#{app}:check".to_sym}
+
 desc "test"
 task :test => APPS.map {|app| "#{app}:test".to_sym}
 

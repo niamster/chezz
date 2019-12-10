@@ -8,4 +8,5 @@ install:
 before_script:
   - npm i npm@latest -g
 script:
+  - rake check
   - rake test
