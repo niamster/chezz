@@ -1,10 +1,10 @@
 def npm(*args)
-  trap('SIGINT') {  exit }
+  trap('SIGINT') { exit }
   sh "npm", *args
 end
 
 def eslint(*args)
-  trap('SIGINT') {  exit }
+  trap('SIGINT') { exit }
   sh "eslint", *args
 end
 
