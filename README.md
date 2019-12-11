@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/niamster/chezz.svg?branch=master)](https://travis-ci.org/niamster/chezz)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4957169f2969cedfc53c/maintainability)](https://codeclimate.com/github/niamster/chezz/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4957169f2969cedfc53c/test_coverage)](https://codeclimate.com/github/niamster/chezz/test_coverage)
 
 **CHEZZ** pet project to explore Java Spring framework.
 
