@@ -10,6 +10,9 @@ import chezz.users.KeyWhitenerBCrypt;
 import chezz.users.UserManager;
 import chezz.users.UserTokenGenerator;
 import chezz.users.UserTokenGeneratorSimple;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +26,17 @@ public class ApplicationConfig {
   private final Logger logger = LogManager.getLogger(UserStoreMem.class);
 
   @Autowired private ConfigProperties config;
+
+  @Bean
+  public String appVersion() {
+    try (InputStream input = new FileInputStream("src/main/resources/app.properties")) {
+      Properties prop = new Properties();
+      prop.load(input);
+      return prop.getProperty("version");
+    } catch (IOException ex) {
+      return "0.0.0";
+    }
+  }
 
   @Bean
   public UserStore userStore() {
