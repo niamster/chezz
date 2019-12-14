@@ -8,29 +8,42 @@ import org.apache.logging.log4j.Logger;
 public class UserStoreMem implements UserStore {
 
   private final Logger logger = LogManager.getLogger(UserStoreMem.class);
-  private final Map<String, UserMeta> store = new HashMap<String, UserMeta>();
+  private final Map<String, UserMeta> metaById = new HashMap<String, UserMeta>();
+  private final Map<String, UserMeta> metaByUsername = new HashMap<String, UserMeta>();
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
   private final Lock rLock = lock.readLock();
   private final Lock wLock = lock.writeLock();
 
-  public boolean addUser(String username, UserMeta meta) {
+  public boolean addUser(UserInfo userInfo, String hash) {
+    String id = UUID.randomUUID().toString();
     wLock.lock();
     try {
-      if (store.containsKey(username)) {
+      if (metaByUsername.containsKey(userInfo.username)) {
         return false;
       }
-      store.put(username, meta);
-      logger.info("User '{}' added", username);
+      UserMeta userMeta = new UserMeta(userInfo, hash, id);
+      metaByUsername.put(userInfo.username, userMeta);
+      metaById.put(id, userMeta);
+      logger.info("User '{}' added", userInfo.username);
     } finally {
       wLock.unlock();
     }
     return true;
   }
 
-  public UserMeta getUser(String username) {
+  public UserMeta getUserById(String id) {
     rLock.lock();
     try {
-      return store.get(username);
+      return metaById.get(id);
+    } finally {
+      rLock.unlock();
+    }
+  }
+
+  public UserMeta getUserByName(String username) {
+    rLock.lock();
+    try {
+      return metaByUsername.get(username);
     } finally {
       rLock.unlock();
     }
@@ -38,9 +51,9 @@ public class UserStoreMem implements UserStore {
 
   public List<String> getAllUsers() {
     rLock.lock();
-    List<String> users = new Vector<String>(store.size());
+    List<String> users = new Vector<String>(metaByUsername.size());
     try {
-      for (String username : store.keySet()) {
+      for (String username : metaByUsername.keySet()) {
         users.add(username);
       }
     } finally {
