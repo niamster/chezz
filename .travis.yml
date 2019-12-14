@@ -1,10 +1,12 @@
 language: java
-dist: trusty
+dist: bionic
 jdk:
-  - oraclejdk8
+  - oraclejdk9
 before_install:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
+  - sudo apt-get update
+  - sudo apt-get -y install argon2
 # W/A for Travis CI to avoid some weird install steps
 install:
   - true
