@@ -6,7 +6,7 @@ import chezz.datastore.UserStoreSelector;
 import chezz.datastore.UserTokenStore;
 import chezz.datastore.UserTokenStoreMem;
 import chezz.users.KeyWhitener;
-import chezz.users.KeyWhitenerByName;
+import chezz.users.KeyWhitenerSelector;
 import chezz.users.UserManager;
 import chezz.users.UserTokenGenerator;
 import chezz.users.UserTokenGeneratorSimple;
@@ -49,7 +49,7 @@ public class ApplicationConfig {
   public KeyWhitener keyWhitener() {
     String keyWhitener = config.getSecurityProperties().getKeyWhitener();
     logger.info("Using '{}' as key whitener", keyWhitener);
-    return KeyWhitenerByName.getKeyWhitener(keyWhitener);
+    return new KeyWhitenerSelector().getByName(keyWhitener);
   }
 
   @Bean
