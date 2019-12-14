@@ -12,11 +12,13 @@ public class UserStoreMemTests {
   @Test
   public void testAddUser() {
     UserStoreMem store = new UserStoreMem();
-    assertNull(store.getUser("test_user"));
+    assertNull(store.getUserByName("test_user"));
     assertEquals(0, store.getAllUsers().size());
-    assertTrue(store.addUser("test_user", new UserMeta("u@u", "--")));
-    assertEquals("u@u", store.getUser("test_user").email);
+    assertTrue(store.addUser(new UserInfo("test_user", "u@u"), "--"));
+    UserMeta userMeta = store.getUserByName("test_user");
+    assertEquals("u@u", userMeta.userInfo.email);
+    assertEquals(userMeta, store.getUserById(userMeta.id));
     assertEquals(1, store.getAllUsers().size());
-    assertFalse(store.addUser("test_user", new UserMeta("u@u", "--")));
+    assertFalse(store.addUser(new UserInfo("test_user", "u@u"), "--"));
   }
 }

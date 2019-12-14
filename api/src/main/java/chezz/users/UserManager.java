@@ -1,5 +1,6 @@
 package chezz.users;
 
+import chezz.datastore.UserInfo;
 import chezz.datastore.UserMeta;
 import chezz.datastore.UserStore;
 import java.util.*;
@@ -16,22 +17,22 @@ public class UserManager {
 
   public boolean addUser(String username, String email, String password) {
     String hash = keyWhitener.hash(password);
-    return store.addUser(username, new UserMeta(email, hash));
+    return store.addUser(new UserInfo(username, email), hash);
   }
 
   public boolean verifyUser(String username, String password) {
-    UserMeta meta = store.getUser(username);
-    if (meta == null) {
+    UserMeta userMeta = store.getUserByName(username);
+    if (userMeta == null) {
       return false;
     }
-    return keyWhitener.verify(password, meta.hash);
+    return keyWhitener.verify(password, userMeta.hash);
   }
 
   public List<String> getAllUsers() {
     return store.getAllUsers();
   }
 
-  public UserMeta getUserInfo(String username) {
-    return store.getUser(username);
+  public UserInfo getUserInfo(String username) {
+    return store.getUserByName(username).userInfo;
   }
 }
