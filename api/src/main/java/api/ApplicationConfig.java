@@ -2,6 +2,7 @@ package api;
 
 import chezz.datastore.UserStore;
 import chezz.datastore.UserStoreMem;
+import chezz.datastore.UserStoreSelector;
 import chezz.datastore.UserTokenStore;
 import chezz.datastore.UserTokenStoreMem;
 import chezz.users.KeyWhitener;
@@ -39,7 +40,9 @@ public class ApplicationConfig {
 
   @Bean
   public UserStore userStore() {
-    return new UserStoreMem();
+    String userStore = config.getUserStore();
+    logger.info("Using '{}' as user store", userStore);
+    return new UserStoreSelector().getByName(userStore);
   }
 
   @Bean
