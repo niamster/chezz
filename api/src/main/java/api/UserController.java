@@ -26,10 +26,14 @@ public class UserController {
     this.userTokenGenerator = userTokenGenerator;
   }
 
-  class Status {
+  static class Status {
 
     public String status;
     public String token;
+
+    public Status() {
+      super();
+    }
 
     public Status(String status) {
       this.status = status;
@@ -46,6 +50,16 @@ public class UserController {
     public String username;
     public String email;
     public String password;
+
+    public SignUpRequest() {
+      super();
+    }
+
+    public SignUpRequest(String username, String email, String password) {
+      this.username = username;
+      this.email = email;
+      this.password = password;
+    }
   }
 
   @PostMapping(value = APISecurity.PUBLIC_EP_PREFIX + "/signup", consumes = "application/json")
@@ -62,6 +76,15 @@ public class UserController {
 
     public String username;
     public String password;
+
+    public SignInRequest() {
+      super();
+    }
+
+    public SignInRequest(String username, String password) {
+      this.username = username;
+      this.password = password;
+    }
   }
 
   @PostMapping(value = APISecurity.PUBLIC_EP_PREFIX + "/signin", consumes = "application/json")
@@ -96,7 +119,7 @@ public class UserController {
   }
 
   @GetMapping(APISecurity.PROTECTED_EP_PREFIX + "/user/info")
-  public UserInfoResponse users(
+  public UserInfoResponse userInfo(
       @RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken) {
     String username = userTokenStore.getUser(userToken);
     String email = userManager.getUserInfo(username).email;
