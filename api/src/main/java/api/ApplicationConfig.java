@@ -4,7 +4,7 @@ import chezz.datastore.UserStore;
 import chezz.datastore.UserStoreMem;
 import chezz.datastore.UserStoreSelector;
 import chezz.datastore.UserTokenStore;
-import chezz.datastore.UserTokenStoreMem;
+import chezz.datastore.UserTokenStoreSelector;
 import chezz.users.KeyWhitener;
 import chezz.users.KeyWhitenerSelector;
 import chezz.users.UserManager;
@@ -54,7 +54,9 @@ public class ApplicationConfig {
 
   @Bean
   public UserTokenStore userTokenStore() {
-    return new UserTokenStoreMem();
+    String userTokenStore = config.getUserTokenStore();
+    logger.info("Using '{}' as user token store", userTokenStore);
+    return new UserTokenStoreSelector().getByName(userTokenStore);
   }
 
   @Bean
