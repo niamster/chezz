@@ -27,6 +27,13 @@ public class ConfigProperties {
     return userTokenStore;
   }
 
+  @Value("${user_token_generator:simple}")
+  private String userTokenGenerator;
+
+  public String getUserTokenGenerator() {
+    return userTokenGenerator;
+  }
+
   public ConfigSecurityProperties getSecurityProperties() {
     return securityProperties;
   }
