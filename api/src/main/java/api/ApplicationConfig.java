@@ -9,7 +9,7 @@ import chezz.users.KeyWhitener;
 import chezz.users.KeyWhitenerSelector;
 import chezz.users.UserManager;
 import chezz.users.UserTokenGenerator;
-import chezz.users.UserTokenGeneratorSimple;
+import chezz.users.UserTokenGeneratorSelector;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,7 +61,9 @@ public class ApplicationConfig {
 
   @Bean
   public UserTokenGenerator userTokenGenerator() {
-    return new UserTokenGeneratorSimple();
+    String userTokenGenerator = config.getUserTokenGenerator();
+    logger.info("Using '{}' as user token generator", userTokenGenerator);
+    return new UserTokenGeneratorSelector().getByName(userTokenGenerator);
   }
 
   // XXX: maybe this is not the best place to init User Manager
