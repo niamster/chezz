@@ -5,8 +5,7 @@ import chezz.datastore.UserStoreMem;
 import chezz.datastore.UserTokenStore;
 import chezz.datastore.UserTokenStoreMem;
 import chezz.users.KeyWhitener;
-import chezz.users.KeyWhitenerArgon2;
-import chezz.users.KeyWhitenerBCrypt;
+import chezz.users.KeyWhitenerByName;
 import chezz.users.UserManager;
 import chezz.users.UserTokenGenerator;
 import chezz.users.UserTokenGeneratorSimple;
@@ -47,15 +46,7 @@ public class ApplicationConfig {
   public KeyWhitener keyWhitener() {
     String keyWhitener = config.getSecurityProperties().getKeyWhitener();
     logger.info("Using '{}' as key whitener", keyWhitener);
-    switch (keyWhitener) {
-      case "bcrypt":
-        return new KeyWhitenerBCrypt();
-      case "argon2":
-        return new KeyWhitenerArgon2();
-      default:
-        throw new ServiceConfigurationError(
-            String.format("Unknown key whitener '%s'", keyWhitener));
-    }
+    return KeyWhitenerByName.getKeyWhitener(keyWhitener);
   }
 
   @Bean
