@@ -3,11 +3,22 @@ package chezz.datastore;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-public class UserTokenStoreMemTests {
+public class UserTokenStoreTests {
 
   @Test
+  public void testUnknownStore() {
+    UserTokenStore store = new UserTokenStoreSelector().getByName("???");
+    assertNull(store);
+  }
+
+  @DisplayName("User Token Store tests")
+  @ParameterizedTest(name = "run #{index} with [{arguments}]")
+  @ValueSource(strings = {"mem"})
   public void testSetToken() {
     UserTokenStoreMem store = new UserTokenStoreMem();
     String token0 = "token-0", token1 = "token-1";

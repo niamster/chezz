@@ -20,6 +20,13 @@ public class ConfigProperties {
     return userStore;
   }
 
+  @Value("${user_token_store:mem}")
+  private String userTokenStore;
+
+  public String getUserTokenStore() {
+    return userTokenStore;
+  }
+
   public ConfigSecurityProperties getSecurityProperties() {
     return securityProperties;
   }
