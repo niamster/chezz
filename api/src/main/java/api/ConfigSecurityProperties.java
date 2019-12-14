@@ -13,10 +13,6 @@ public class ConfigSecurityProperties {
   @Value("${key_whitener:bcrypt}")
   private String keyWhitener;
 
-  public void setKeyWhitener(String keyWhitener) {
-    this.keyWhitener = keyWhitener;
-  }
-
   public String getKeyWhitener() {
     return keyWhitener;
   }
