@@ -1,5 +1,6 @@
 package chezz.users;
 
+import chezz.datastore.InvalidUserException;
 import chezz.datastore.UserInfo;
 import chezz.datastore.UserMeta;
 import chezz.datastore.UserStore;
@@ -17,7 +18,11 @@ public class UserManager {
 
   public boolean addUser(String username, String email, String password) {
     String hash = keyWhitener.hash(password);
-    return store.addUser(new UserInfo(username, email), hash);
+    try {
+      return store.addUser(new UserInfo(username, email), hash);
+    } catch (InvalidUserException exc) {
+      return false;
+    }
   }
 
   public boolean verifyUser(String username, String password) {

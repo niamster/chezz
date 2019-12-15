@@ -4,7 +4,7 @@ public interface UserTokenStore {
 
   String getUser(String token);
 
-  void setUserToken(String username, String token);
+  void setUserToken(String username, String token) throws InvalidUserTokenException;
 
-  void removeToken(String token);
+  void removeToken(String token) throws InvalidUserTokenException;
 }

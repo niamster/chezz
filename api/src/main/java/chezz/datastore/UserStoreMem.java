@@ -16,7 +16,17 @@ public class UserStoreMem implements UserStore {
 
   public UserStoreMem(DataStoreConnectionInformation info) {}
 
-  public boolean addUser(UserInfo userInfo, String hash) {
+  public boolean addUser(UserInfo userInfo, String hash) throws InvalidUserException {
+    if (userInfo == null) {
+      throw new InvalidUserException("invalid user info");
+    }
+    if (userInfo.username == null || userInfo.username.isEmpty()) {
+      throw new InvalidUserException("invalid username");
+    }
+    if (hash == null || hash.isEmpty()) {
+      throw new InvalidUserException("invalid hash");
+    }
+
     String id = UUID.randomUUID().toString();
     wLock.lock();
     try {

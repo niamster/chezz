@@ -3,6 +3,7 @@ package chezz.datastore;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +19,42 @@ public class UserStoreTests {
     assertNull(store);
   }
 
+  @DisplayName("User Store corner case tests")
+  @ParameterizedTest(name = "run #{index} with [{arguments}]")
+  @ValueSource(strings = {"mem"})
+  public void testCornerCases(String name) throws Exception {
+    UserStore store = new UserStoreSelector().getByName(name, null);
+    assertThrows(
+        InvalidUserException.class,
+        () -> {
+          store.addUser(null, null);
+        });
+    assertThrows(
+        InvalidUserException.class,
+        () -> {
+          store.addUser(new UserInfo(null, ""), null);
+        });
+    assertThrows(
+        InvalidUserException.class,
+        () -> {
+          store.addUser(new UserInfo("", ""), null);
+        });
+    assertThrows(
+        InvalidUserException.class,
+        () -> {
+          store.addUser(new UserInfo(".", ""), null);
+        });
+    assertThrows(
+        InvalidUserException.class,
+        () -> {
+          store.addUser(new UserInfo(".", ""), "");
+        });
+  }
+
   @DisplayName("User Store tests")
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
-  public void testAddUser(String name) {
+  public void testAddUser(String name) throws Exception {
     UserStore store = new UserStoreSelector().getByName(name, null);
     assertNull(store.getUserByName("test_user"));
     assertEquals(0, store.getAllUsers().size());

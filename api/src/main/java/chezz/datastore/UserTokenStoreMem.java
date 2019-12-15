@@ -22,7 +22,14 @@ public class UserTokenStoreMem implements UserTokenStore {
     }
   }
 
-  public void setUserToken(String username, String token) {
+  public void setUserToken(String username, String token) throws InvalidUserTokenException {
+    if (username == null || username.isEmpty()) {
+      throw new InvalidUserTokenException("invalid username");
+    }
+    if (token == null || token.isEmpty()) {
+      throw new InvalidUserTokenException("invalid token");
+    }
+
     wLock.lock();
     try {
       String oldToken = tokenByUser.get(username);
@@ -36,10 +43,11 @@ public class UserTokenStoreMem implements UserTokenStore {
     }
   }
 
-  public void removeToken(String token) {
-    if (token == null) {
-      return;
+  public void removeToken(String token) throws InvalidUserTokenException {
+    if (token == null || token.isEmpty()) {
+      throw new InvalidUserTokenException("invalid token");
     }
+
     wLock.lock();
     try {
       userByToken.remove(token);

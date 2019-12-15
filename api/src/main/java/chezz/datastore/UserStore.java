@@ -4,7 +4,7 @@ import java.util.*;
 
 public interface UserStore {
 
-  boolean addUser(UserInfo userInfo, String hash);
+  boolean addUser(UserInfo userInfo, String hash) throws InvalidUserException;
 
   UserMeta getUserById(String userId);
 
