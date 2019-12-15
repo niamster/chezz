@@ -63,7 +63,7 @@ public class UserController {
   }
 
   @PostMapping(value = APISecurity.PUBLIC_EP_PREFIX + "/signup", consumes = "application/json")
-  public Status signup(@RequestBody SignUpRequest req) {
+  public Status signup(@RequestBody SignUpRequest req) throws Exception {
     if (userManager.addUser(req.username, req.email, req.password)) {
       String token = userTokenGenerator.generateToken(req.username);
       userTokenStore.setUserToken(req.username, token);
@@ -88,7 +88,7 @@ public class UserController {
   }
 
   @PostMapping(value = APISecurity.PUBLIC_EP_PREFIX + "/signin", consumes = "application/json")
-  public Status signin(@RequestBody SignInRequest req) {
+  public Status signin(@RequestBody SignInRequest req) throws Exception {
     if (userManager.verifyUser(req.username, req.password)) {
       String token = userTokenGenerator.generateToken(req.username);
       userTokenStore.setUserToken(req.username, token);
@@ -98,7 +98,8 @@ public class UserController {
   }
 
   @GetMapping(APISecurity.PROTECTED_EP_PREFIX + "/signout")
-  public void signout(@RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken) {
+  public void signout(@RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken)
+      throws Exception {
     userTokenStore.removeToken(userToken);
   }
 

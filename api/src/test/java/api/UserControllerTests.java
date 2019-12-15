@@ -37,6 +37,22 @@ public class UserControllerTests {
   }
 
   @Test
+  public void testCornerCases() throws Exception {
+    mockMvc
+        .perform(
+            post("/public/signup")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(
+                    objectMapper.writeValueAsBytes(
+                        new UserController.SignUpRequest("", "u@u", ""))))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.status").value("fail"))
+        .andExpect(jsonPath("$.token").isEmpty())
+        .andDo(print());
+  }
+
+  @Test
   public void testSignup() throws Exception {
     String username = "user_0", password = "_password_", email = "user@org";
     mockMvc
