@@ -14,7 +14,7 @@ public class UserStoreTests {
 
   @Test
   public void testUnknownStore() {
-    UserStore store = new UserStoreSelector().getByName("???");
+    UserStore store = new UserStoreSelector().getByName("???", null);
     assertNull(store);
   }
 
@@ -22,7 +22,7 @@ public class UserStoreTests {
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
   public void testAddUser(String name) {
-    UserStore store = new UserStoreSelector().getByName(name);
+    UserStore store = new UserStoreSelector().getByName(name, null);
     assertNull(store.getUserByName("test_user"));
     assertEquals(0, store.getAllUsers().size());
     assertTrue(store.addUser(new UserInfo("test_user", "u@u"), "--"));

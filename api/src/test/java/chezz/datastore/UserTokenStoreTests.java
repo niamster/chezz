@@ -12,15 +12,15 @@ public class UserTokenStoreTests {
 
   @Test
   public void testUnknownStore() {
-    UserTokenStore store = new UserTokenStoreSelector().getByName("???");
+    UserTokenStore store = new UserTokenStoreSelector().getByName("???", null);
     assertNull(store);
   }
 
   @DisplayName("User Token Store tests")
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
-  public void testSetToken() {
-    UserTokenStoreMem store = new UserTokenStoreMem();
+  public void testSetToken(String name) {
+    UserTokenStore store = new UserTokenStoreSelector().getByName(name, null);
     String token0 = "token-0", token1 = "token-1";
 
     assertNull(store.getUser(token0));

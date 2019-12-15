@@ -11,6 +11,8 @@ public class UserTokenStoreMem implements UserTokenStore {
   private final Lock rLock = lock.readLock();
   private final Lock wLock = lock.writeLock();
 
+  public UserTokenStoreMem(DataStoreConnectionInformation info) {}
+
   public String getUser(String token) {
     rLock.lock();
     try {

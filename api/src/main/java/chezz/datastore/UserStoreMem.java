@@ -14,6 +14,8 @@ public class UserStoreMem implements UserStore {
   private final Lock rLock = lock.readLock();
   private final Lock wLock = lock.writeLock();
 
+  public UserStoreMem(DataStoreConnectionInformation info) {}
+
   public boolean addUser(UserInfo userInfo, String hash) {
     String id = UUID.randomUUID().toString();
     wLock.lock();
