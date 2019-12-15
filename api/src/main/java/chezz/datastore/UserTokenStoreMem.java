@@ -24,7 +24,7 @@ public class UserTokenStoreMem implements UserTokenStore {
     wLock.lock();
     try {
       String oldToken = tokenByUser.get(username);
-      if (oldToken != null && !oldToken.isEmpty()) {
+      if (oldToken != null) {
         userByToken.remove(oldToken);
       }
       userByToken.put(token, username);
