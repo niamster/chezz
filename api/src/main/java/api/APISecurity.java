@@ -38,7 +38,7 @@ public class APISecurity extends WebSecurityConfigurerAdapter {
         .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 
-  public APIAuthenticationFilter authenticationFilter() throws Exception {
+  public APIAuthenticationFilter authenticationFilter() {
     return new APIAuthenticationFilter(tokenAuthenticationService);
   }
 }
