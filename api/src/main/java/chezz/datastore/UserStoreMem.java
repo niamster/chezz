@@ -51,11 +51,9 @@ public class UserStoreMem implements UserStore {
 
   public List<String> getAllUsers() {
     rLock.lock();
-    List<String> users = new Vector<String>(metaByUsername.size());
+    List<String> users = new Vector<>(metaByUsername.size());
     try {
-      for (String username : metaByUsername.keySet()) {
-        users.add(username);
-      }
+      users.addAll(metaByUsername.keySet());
     } finally {
       rLock.unlock();
     }
