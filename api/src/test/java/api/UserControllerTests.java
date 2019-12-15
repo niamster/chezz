@@ -38,14 +38,14 @@ public class UserControllerTests {
 
   @Test
   public void testSignup() throws Exception {
-    String userName = "user_0", password = "_password_", email = "user@org";
+    String username = "user_0", password = "_password_", email = "user@org";
     mockMvc
         .perform(
             post("/public/signin")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(
                     objectMapper.writeValueAsBytes(
-                        new UserController.SignInRequest(userName, password))))
+                        new UserController.SignInRequest(username, password))))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
         .andExpect(jsonPath("$.status").value("fail"))
@@ -58,7 +58,7 @@ public class UserControllerTests {
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .content(
                         objectMapper.writeValueAsBytes(
-                            new UserController.SignUpRequest(userName, email, password))))
+                            new UserController.SignUpRequest(username, email, password))))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json;charset=UTF-8"))
             .andExpect(jsonPath("$.status").value("ok"))
@@ -74,7 +74,7 @@ public class UserControllerTests {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(
                     objectMapper.writeValueAsBytes(
-                        new UserController.SignUpRequest(userName, email, password))))
+                        new UserController.SignUpRequest(username, email, password))))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
         .andExpect(jsonPath("$.status").value("fail"))
@@ -83,7 +83,7 @@ public class UserControllerTests {
         .perform(get("/protected/user/info").param("user_token", userToken))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.username").value(userName))
+        .andExpect(jsonPath("$.username").value(username))
         .andExpect(jsonPath("$.email").value(email))
         .andDo(print());
     mockMvc
@@ -99,7 +99,7 @@ public class UserControllerTests {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(
                     objectMapper.writeValueAsBytes(
-                        new UserController.SignInRequest(userName, password))))
+                        new UserController.SignInRequest(username, password))))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
         .andExpect(jsonPath("$.status").value("ok"))
