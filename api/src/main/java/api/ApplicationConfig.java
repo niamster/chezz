@@ -1,5 +1,6 @@
 package api;
 
+import chezz.datastore.DataStoreConnectionInformation;
 import chezz.datastore.UserStore;
 import chezz.datastore.UserStoreMem;
 import chezz.datastore.UserStoreSelector;
@@ -42,7 +43,7 @@ public class ApplicationConfig {
   public UserStore userStore() {
     String userStore = config.getUserStore();
     logger.info("Using '{}' as user store", userStore);
-    return new UserStoreSelector().getByName(userStore);
+    return new UserStoreSelector().getByName(userStore, new DataStoreConnectionInformation());
   }
 
   @Bean
@@ -56,7 +57,8 @@ public class ApplicationConfig {
   public UserTokenStore userTokenStore() {
     String userTokenStore = config.getUserTokenStore();
     logger.info("Using '{}' as user token store", userTokenStore);
-    return new UserTokenStoreSelector().getByName(userTokenStore);
+    return new UserTokenStoreSelector()
+        .getByName(userTokenStore, new DataStoreConnectionInformation());
   }
 
   @Bean
