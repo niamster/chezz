@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 public class UserStoreMem implements UserStore {
 
   private final Logger logger = LogManager.getLogger(UserStoreMem.class);
-  private final Map<String, UserMeta> metaById = new HashMap<String, UserMeta>();
-  private final Map<String, UserMeta> metaByUsername = new HashMap<String, UserMeta>();
+  private final Map<String, UserMeta> metaById = new HashMap<>();
+  private final Map<String, UserMeta> metaByUsername = new HashMap<>();
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
   private final Lock rLock = lock.readLock();
   private final Lock wLock = lock.writeLock();

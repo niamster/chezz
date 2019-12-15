@@ -5,8 +5,8 @@ import java.util.concurrent.locks.*;
 
 public class UserTokenStoreMem implements UserTokenStore {
 
-  private final Map<String, String> tokenByUser = new HashMap<String, String>();
-  private final Map<String, String> userByToken = new HashMap<String, String>();
+  private final Map<String, String> tokenByUser = new HashMap<>();
+  private final Map<String, String> userByToken = new HashMap<>();
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
   private final Lock rLock = lock.readLock();
   private final Lock wLock = lock.writeLock();
