@@ -21,6 +21,7 @@ public class KeyWhitenerArgon2 implements KeyWhitener {
     logger.info("Argon2 iterations {}", argon2Iterations);
   }
 
+  @Override
   public String hash(String key) {
     Argon2 argon2 = Argon2Factory.create();
     char[] keyArray = key.toCharArray();
@@ -31,6 +32,7 @@ public class KeyWhitenerArgon2 implements KeyWhitener {
     }
   }
 
+  @Override
   public boolean verify(String key, String hash) {
     Argon2 argon2 = Argon2Factory.create();
     char[] keyArray = key.toCharArray();

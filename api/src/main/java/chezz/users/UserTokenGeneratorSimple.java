@@ -7,6 +7,7 @@ public class UserTokenGeneratorSimple implements UserTokenGenerator {
 
   private final SecureRandom rng = new SecureRandom();
 
+  @Override
   public String generateToken(String username) {
     byte[] random = new byte[16];
     rng.nextBytes(random);

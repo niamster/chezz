@@ -13,6 +13,7 @@ public class UserTokenStoreMem implements UserTokenStore {
 
   public UserTokenStoreMem(DataStoreConnectionInformation info) {}
 
+  @Override
   public String getUser(String token) {
     rLock.lock();
     try {
@@ -22,6 +23,7 @@ public class UserTokenStoreMem implements UserTokenStore {
     }
   }
 
+  @Override
   public void setUserToken(String username, String token) throws InvalidUserTokenException {
     if (username == null || username.isEmpty()) {
       throw new InvalidUserTokenException("invalid username");
@@ -43,6 +45,7 @@ public class UserTokenStoreMem implements UserTokenStore {
     }
   }
 
+  @Override
   public void removeToken(String token) throws InvalidUserTokenException {
     if (token == null || token.isEmpty()) {
       throw new InvalidUserTokenException("invalid token");

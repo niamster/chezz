@@ -16,6 +16,7 @@ public class UserStoreMem implements UserStore {
 
   public UserStoreMem(DataStoreConnectionInformation info) {}
 
+  @Override
   public boolean addUser(UserInfo userInfo, String hash) throws InvalidUserException {
     if (userInfo == null) {
       throw new InvalidUserException("invalid user info");
@@ -43,6 +44,7 @@ public class UserStoreMem implements UserStore {
     return true;
   }
 
+  @Override
   public UserMeta getUserById(String id) {
     rLock.lock();
     try {
@@ -52,6 +54,7 @@ public class UserStoreMem implements UserStore {
     }
   }
 
+  @Override
   public UserMeta getUserByName(String username) {
     rLock.lock();
     try {
@@ -61,6 +64,7 @@ public class UserStoreMem implements UserStore {
     }
   }
 
+  @Override
   public List<String> getAllUsers() {
     rLock.lock();
     List<String> users = new Vector<>(metaByUsername.size());
