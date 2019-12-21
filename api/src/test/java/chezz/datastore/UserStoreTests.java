@@ -22,33 +22,13 @@ public class UserStoreTests {
   @DisplayName("User Store corner case tests")
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
-  public void testCornerCases(String name) throws Exception {
+  public void testCornerCases(String name) {
     UserStore store = new UserStoreSelector().getByName(name, null);
-    assertThrows(
-        InvalidUserException.class,
-        () -> {
-          store.addUser(null, null);
-        });
-    assertThrows(
-        InvalidUserException.class,
-        () -> {
-          store.addUser(new UserInfo(null, ""), null);
-        });
-    assertThrows(
-        InvalidUserException.class,
-        () -> {
-          store.addUser(new UserInfo("", ""), null);
-        });
-    assertThrows(
-        InvalidUserException.class,
-        () -> {
-          store.addUser(new UserInfo(".", ""), null);
-        });
-    assertThrows(
-        InvalidUserException.class,
-        () -> {
-          store.addUser(new UserInfo(".", ""), "");
-        });
+    assertThrows(InvalidUserException.class, () -> store.addUser(null, null));
+    assertThrows(InvalidUserException.class, () -> store.addUser(new UserInfo(null, ""), null));
+    assertThrows(InvalidUserException.class, () -> store.addUser(new UserInfo("", ""), null));
+    assertThrows(InvalidUserException.class, () -> store.addUser(new UserInfo(".", ""), null));
+    assertThrows(InvalidUserException.class, () -> store.addUser(new UserInfo(".", ""), ""));
   }
 
   @DisplayName("User Store tests")
