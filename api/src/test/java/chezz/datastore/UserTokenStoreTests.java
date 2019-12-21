@@ -22,36 +22,12 @@ public class UserTokenStoreTests {
   @ValueSource(strings = {"mem"})
   public void testCornerCases(String name) {
     UserTokenStore store = new UserTokenStoreSelector().getByName(name, null);
-    assertThrows(
-        InvalidUserTokenException.class,
-        () -> {
-          store.setUserToken(null, null);
-        });
-    assertThrows(
-        InvalidUserTokenException.class,
-        () -> {
-          store.setUserToken("", null);
-        });
-    assertThrows(
-        InvalidUserTokenException.class,
-        () -> {
-          store.setUserToken(".", null);
-        });
-    assertThrows(
-        InvalidUserTokenException.class,
-        () -> {
-          store.setUserToken(".", "");
-        });
-    assertThrows(
-        InvalidUserTokenException.class,
-        () -> {
-          store.removeToken(null);
-        });
-    assertThrows(
-        InvalidUserTokenException.class,
-        () -> {
-          store.removeToken("");
-        });
+    assertThrows(InvalidUserTokenException.class, () -> store.setUserToken(null, null));
+    assertThrows(InvalidUserTokenException.class, () -> store.setUserToken("", null));
+    assertThrows(InvalidUserTokenException.class, () -> store.setUserToken(".", null));
+    assertThrows(InvalidUserTokenException.class, () -> store.setUserToken(".", ""));
+    assertThrows(InvalidUserTokenException.class, () -> store.removeToken(null));
+    assertThrows(InvalidUserTokenException.class, () -> store.removeToken(""));
   }
 
   @DisplayName("User Token Store tests")
