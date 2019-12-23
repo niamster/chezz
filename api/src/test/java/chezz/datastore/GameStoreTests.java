@@ -23,13 +23,13 @@ public class GameStoreTests {
   @DisplayName("Game Store tests")
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
-  public void testGameStore(String name) {
+  public void testGameStore(String name) throws Exception {
     GameStore store = new GameStoreSelector().getByName(name, null);
     assertEquals(0, store.getGames("user_0").size());
-    store.saveGame(new Game("user_0", "user_1"));
+    store.saveGame(new Game("user_0").join("user_1"));
     assertEquals(1, store.getGames("user_0").size());
     assertEquals(1, store.getGames("user_1").size());
-    store.saveGame(new Game("user_0", "user_1"));
+    store.saveGame(new Game("user_0").join("user_1"));
     assertEquals(2, store.getGames("user_0").size());
     assertEquals(2, store.getGames("user_1").size());
     Game game = store.getGames("user_0").get(0);

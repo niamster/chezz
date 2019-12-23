@@ -1,10 +1,10 @@
 package chezz.game;
 
-public class InvalidMoveException extends Exception {
+public class GameException extends Exception {
 
   private static final long serialVersionUID = 4079281802990027494L;
 
-  InvalidMoveException(String msg) {
+  GameException(String msg) {
     super(msg);
   }
 }

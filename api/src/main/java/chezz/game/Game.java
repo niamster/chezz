@@ -13,12 +13,19 @@ public class Game implements Serializable {
   private Deck deck;
   private final String gameId;
 
-  public Game(String white, String black) {
+  public Game(String white) {
     this.turn = Color.WHITE;
     this.deck = new Deck();
     this.players.put(white, Color.WHITE);
-    this.players.put(black, Color.BLACK);
-    this.gameId = DigestUtils.sha256Hex(UUID.randomUUID().toString() + white + black);
+    this.gameId = DigestUtils.sha256Hex(UUID.randomUUID().toString() + white);
+  }
+
+  public Game join(String black) throws Exception {
+    if (players.size() != 1) {
+      throw new GameException("too many players");
+    }
+    players.put(black, Color.BLACK);
+    return this;
   }
 
   public Deck getDeck() {
@@ -26,9 +33,12 @@ public class Game implements Serializable {
   }
 
   public void setDeck(String player, Deck deck) throws Exception {
+    if (players.size() != 2) {
+      throw new GameException("not enough players");
+    }
     Color color = players.get(player);
     if (color != this.turn) {
-      throw new InvalidMoveException("this player can't do a move");
+      throw new GameException("this player can't do a move");
     }
     this.deck = deck;
     this.turn = color == Color.WHITE ? Color.BLACK : Color.WHITE;
