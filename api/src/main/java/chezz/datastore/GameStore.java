@@ -9,5 +9,5 @@ public interface GameStore {
 
   Game getGame(String gameId);
 
-  void saveGame(Game game);
+  void saveGame(Game game) throws Exception;
 }

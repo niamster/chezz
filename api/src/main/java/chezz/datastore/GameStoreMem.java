@@ -48,7 +48,7 @@ public class GameStoreMem implements GameStore {
   }
 
   @Override
-  public void saveGame(Game game) {
+  public void saveGame(Game game) throws Exception {
     wLock.lock();
     try {
       gameById.put(game.getGameId(), game.dump());
@@ -56,7 +56,6 @@ public class GameStoreMem implements GameStore {
         Set<String> games = gamesByUserId.computeIfAbsent(player, k -> new HashSet<>());
         games.add(game.getGameId());
       }
-    } catch (Exception exc) {
     } finally {
       wLock.unlock();
     }
