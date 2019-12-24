@@ -24,10 +24,7 @@ public class GameStoreMem implements GameStore {
         return games;
       }
       for (String gameId : gameIds) {
-        try {
-          games.add(Game.load(gameById.get(gameId)));
-        } catch (Exception exc) {
-        }
+        games.add(Game.load(gameById.get(gameId)));
       }
       return games;
     } finally {
@@ -40,8 +37,6 @@ public class GameStoreMem implements GameStore {
     rLock.lock();
     try {
       return Game.load(gameById.get(gameId));
-    } catch (Exception exc) {
-      return null;
     } finally {
       rLock.unlock();
     }

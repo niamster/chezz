@@ -32,10 +32,14 @@ public class Game implements Serializable {
     return boStream.toByteArray();
   }
 
-  public static Game load(byte[] data) throws Exception {
-    ObjectInputStream iStream = new ObjectInputStream(new ByteArrayInputStream(data));
-    Game game = (Game) iStream.readObject();
-    iStream.close();
+  public static Game load(byte[] data) {
+    Game game = null;
+    try {
+      ObjectInputStream iStream = new ObjectInputStream(new ByteArrayInputStream(data));
+      game = (Game) iStream.readObject();
+      iStream.close();
+    } catch (Exception exc) {
+    }
     return game;
   }
 
