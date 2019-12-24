@@ -10,10 +10,6 @@ import chezz.game.Color;
 import chezz.game.Deck;
 import chezz.game.Game;
 import chezz.game.GameException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import org.junit.jupiter.api.Test;
 
 public class GameTests {
@@ -39,21 +35,17 @@ public class GameTests {
     byte[] blob;
     String gameId;
     {
-      ByteArrayOutputStream bos = new ByteArrayOutputStream();
       Game game = new Game("p0").join("p1");
       game.setDeck("p0", new Deck());
-      ObjectOutputStream os = new ObjectOutputStream(bos);
-      os.writeObject(game);
-      os.close();
-      blob = bos.toByteArray();
+      blob = game.dump();
       gameId = game.getGameId();
       assertNotNull(gameId);
       assertNotEquals("", gameId);
     }
-    ByteArrayInputStream bis = new ByteArrayInputStream(blob);
-    ObjectInputStream is = new ObjectInputStream(bis);
-    Game game = (Game) is.readObject();
+    Game game = Game.load(blob);
     assertEquals(Color.BLACK, game.getTurn());
     assertEquals(gameId, game.getGameId());
+
+    assertThrows(Exception.class, () -> Game.load(null));
   }
 }

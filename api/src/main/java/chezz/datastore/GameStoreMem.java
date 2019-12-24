@@ -6,7 +6,7 @@ import java.util.concurrent.locks.*;
 
 public class GameStoreMem implements GameStore {
 
-  private final Map<String, Game> gameById = new HashMap<>();
+  private final Map<String, byte[]> gameById = new HashMap<>();
   private final Map<String, Set<String>> gamesByUserId = new HashMap<>();
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
   private final Lock rLock = lock.readLock();
@@ -24,7 +24,10 @@ public class GameStoreMem implements GameStore {
         return games;
       }
       for (String gameId : gameIds) {
-        games.add(gameById.get(gameId));
+        try {
+          games.add(Game.load(gameById.get(gameId)));
+        } catch (Exception exc) {
+        }
       }
       return games;
     } finally {
@@ -36,7 +39,9 @@ public class GameStoreMem implements GameStore {
   public Game getGame(String gameId) {
     rLock.lock();
     try {
-      return gameById.get(gameId);
+      return Game.load(gameById.get(gameId));
+    } catch (Exception exc) {
+      return null;
     } finally {
       rLock.unlock();
     }
@@ -46,11 +51,12 @@ public class GameStoreMem implements GameStore {
   public void saveGame(Game game) {
     wLock.lock();
     try {
-      gameById.put(game.getGameId(), game);
+      gameById.put(game.getGameId(), game.dump());
       for (String player : game.getPlayers()) {
         Set<String> games = gamesByUserId.computeIfAbsent(player, k -> new HashSet<>());
         games.add(game.getGameId());
       }
+    } catch (Exception exc) {
     } finally {
       wLock.unlock();
     }

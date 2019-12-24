@@ -36,5 +36,7 @@ public class GameStoreTests {
     assertDoesNotThrow(() -> game.setDeck("user_0", new Deck()));
     store.saveGame(game);
     assertEquals(Color.BLACK, store.getGame(game.getGameId()).getTurn());
+
+    assertNull(store.getGame("xyz"));
   }
 }
