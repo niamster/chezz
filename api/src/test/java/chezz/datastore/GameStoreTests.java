@@ -3,6 +3,7 @@ package chezz.datastore;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chezz.game.Color;
 import chezz.game.Deck;
@@ -36,6 +37,10 @@ public class GameStoreTests {
     assertDoesNotThrow(() -> game.setDeck("user_0", new Deck()));
     store.saveGame(game);
     assertEquals(Color.BLACK, store.getGame(game.getGameId()).getTurn());
+    game.setDeck("user_1", new Deck());
+    game.setDeck("user_0", new Deck());
+    Exception thrown = assertThrows(GameStoreException.class, () -> store.saveGame(game));
+    assertEquals("invalid transaction ID", thrown.getMessage());
 
     assertNull(store.getGame("xyz"));
   }
