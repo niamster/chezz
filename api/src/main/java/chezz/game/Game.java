@@ -16,12 +16,26 @@ public class Game implements Serializable {
   private Color turn;
   private Deck deck;
   private final String gameId;
+  private String transactionId;
 
   public Game(String white) {
     this.turn = Color.WHITE;
     this.deck = new Deck();
     this.players.put(white, Color.WHITE);
     this.gameId = DigestUtils.sha256Hex(UUID.randomUUID().toString() + white);
+    this.transactionId = DigestUtils.sha256Hex(this.gameId);
+  }
+
+  public String getCurrentTransactionId() {
+    return this.transactionId;
+  }
+
+  public static String generateNextTransactionId(String transaction) {
+    return DigestUtils.sha256Hex(transaction + ".");
+  }
+
+  private void commit() {
+    this.transactionId = generateNextTransactionId(this.transactionId);
   }
 
   public byte[] dump() throws Exception {
@@ -48,6 +62,7 @@ public class Game implements Serializable {
       throw new GameException("too many players");
     }
     players.put(black, Color.BLACK);
+    commit();
     return this;
   }
 
@@ -65,6 +80,7 @@ public class Game implements Serializable {
     }
     this.deck = deck;
     this.turn = color == Color.WHITE ? Color.BLACK : Color.WHITE;
+    commit();
   }
 
   public List<String> getPlayers() {

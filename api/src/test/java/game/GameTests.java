@@ -26,26 +26,35 @@ public class GameTests {
   @Test
   public void testGameMove() throws Exception {
     Game game = new Game("p0").join("p1");
+    String transactionId = game.getCurrentTransactionId();
     assertThrows(GameException.class, () -> game.setDeck("p1", new Deck()));
     assertDoesNotThrow(() -> game.setDeck("p0", new Deck()));
+    assertEquals(Game.generateNextTransactionId(transactionId), game.getCurrentTransactionId());
     assertDoesNotThrow(() -> game.setDeck("p1", new Deck()));
+    assertNotEquals(transactionId, game.getCurrentTransactionId());
+    assertEquals(
+        Game.generateNextTransactionId(Game.generateNextTransactionId(transactionId)),
+        game.getCurrentTransactionId());
   }
 
   @Test
   public void testSerialize() throws Exception {
     byte[] blob;
     String gameId;
+    String transactionId;
     {
       Game game = new Game("p0").join("p1");
       game.setDeck("p0", new Deck());
       blob = game.dump();
       gameId = game.getGameId();
+      transactionId = game.getCurrentTransactionId();
       assertNotNull(gameId);
       assertNotEquals("", gameId);
     }
     Game game = Game.load(blob);
     assertEquals(Color.BLACK, game.getTurn());
     assertEquals(gameId, game.getGameId());
+    assertEquals(transactionId, game.getCurrentTransactionId());
 
     assertNull(Game.load(null));
   }
