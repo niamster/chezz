@@ -10,4 +10,6 @@ public interface GameStore {
   Game getGame(String gameId);
 
   void saveGame(Game game) throws Exception;
+
+  List<String> getOpenGameIds();
 }

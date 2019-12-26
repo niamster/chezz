@@ -42,6 +42,14 @@ public class GameStoreTests {
     Exception thrown = assertThrows(GameStoreException.class, () -> store.saveGame(game));
     assertEquals("invalid transaction ID", thrown.getMessage());
 
+    assertEquals(0, store.getOpenGameIds().size());
+    Game tGame = new Game("user_0");
+    store.saveGame(tGame);
+    assertEquals(1, store.getOpenGameIds().size());
+    tGame.join("user_1");
+    store.saveGame(tGame);
+    assertEquals(0, store.getOpenGameIds().size());
+
     assertNull(store.getGame("xyz"));
   }
 }

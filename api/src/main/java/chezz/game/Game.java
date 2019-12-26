@@ -87,6 +87,10 @@ public class Game implements Serializable {
     return new LinkedList<>(this.players.keySet());
   }
 
+  public boolean isOpen() {
+    return this.players.size() != 2;
+  }
+
   public Color getTurn() {
     return turn;
   }

@@ -9,6 +9,7 @@ public class GameStoreMem implements GameStore {
   private final Map<String, byte[]> gameById = new HashMap<>();
   private final Map<String, String> transactionIdByGameId = new HashMap<>();
   private final Map<String, Set<String>> gamesByUserId = new HashMap<>();
+  private final Set<String> openGames = new LinkedHashSet<>();
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
   private final Lock rLock = lock.readLock();
   private final Lock wLock = lock.writeLock();
@@ -49,6 +50,11 @@ public class GameStoreMem implements GameStore {
     try {
       String gameId = game.getGameId();
       String currentTransactionId = transactionIdByGameId.get(gameId);
+      if (game.isOpen()) {
+        this.openGames.add(gameId);
+      } else {
+        this.openGames.remove(gameId);
+      }
       if (currentTransactionId != null) {
         String expectedTransactionId = Game.generateNextTransactionId(currentTransactionId);
         if (!expectedTransactionId.equals(game.getCurrentTransactionId())) {
@@ -64,5 +70,17 @@ public class GameStoreMem implements GameStore {
     } finally {
       wLock.unlock();
     }
+  }
+
+  @Override
+  public List<String> getOpenGameIds() {
+    List<String> games = new LinkedList<>();
+    rLock.lock();
+    try {
+      games.addAll(this.openGames);
+    } finally {
+      rLock.unlock();
+    }
+    return games;
   }
 }
