@@ -11,8 +11,6 @@ import chezz.users.KeyWhitenerSelector;
 import chezz.users.UserManager;
 import chezz.users.UserTokenGenerator;
 import chezz.users.UserTokenGeneratorSelector;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import org.apache.logging.log4j.LogManager;
@@ -29,14 +27,11 @@ public class ApplicationConfig {
   @Autowired private ConfigProperties config;
 
   @Bean
-  public String appVersion() {
-    try (InputStream input = new FileInputStream("src/main/resources/app.properties")) {
-      Properties prop = new Properties();
-      prop.load(input);
-      return prop.getProperty("version");
-    } catch (IOException ex) {
-      return "0.0.0";
-    }
+  public String appVersion() throws Exception {
+    InputStream input = getClass().getClassLoader().getResourceAsStream("app.properties");
+    Properties prop = new Properties();
+    prop.load(input);
+    return prop.getProperty("version");
   }
 
   @Bean
