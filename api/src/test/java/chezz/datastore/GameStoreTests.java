@@ -2,8 +2,8 @@ package chezz.datastore;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chezz.game.Color;
 import chezz.game.Deck;
@@ -17,15 +17,14 @@ public class GameStoreTests {
 
   @Test
   public void testUnknownStore() {
-    GameStore store = new GameStoreSelector().getByName("???", null);
-    assertNull(store);
+    assertTrue(new GameStoreSelector().getByName("???", null).isEmpty());
   }
 
   @DisplayName("Game Store tests")
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
   public void testGameStore(String name) throws Exception {
-    GameStore store = new GameStoreSelector().getByName(name, null);
+    GameStore store = new GameStoreSelector().getByName(name, null).get();
     assertEquals(0, store.getGames("user_0").size());
     store.saveGame(new Game("user_0").join("user_1"));
     assertEquals(1, store.getGames("user_0").size());
@@ -36,7 +35,7 @@ public class GameStoreTests {
     Game game = store.getGames("user_0").get(0);
     assertDoesNotThrow(() -> game.setDeck("user_0", new Deck()));
     store.saveGame(game);
-    assertEquals(Color.BLACK, store.getGame(game.getGameId()).getTurn());
+    assertEquals(Color.BLACK, store.getGame(game.getGameId()).get().getTurn());
     game.setDeck("user_1", new Deck());
     game.setDeck("user_0", new Deck());
     Exception thrown = assertThrows(GameStoreException.class, () -> store.saveGame(game));
@@ -50,6 +49,6 @@ public class GameStoreTests {
     store.saveGame(tGame);
     assertEquals(0, store.getOpenGameIds().size());
 
-    assertNull(store.getGame("xyz"));
+    assertTrue(store.getGame("xyz").isEmpty());
   }
 }

@@ -1,8 +1,10 @@
 package chezz.datastore;
 
+import java.util.*;
+
 public interface UserTokenStore {
 
-  String getUser(String token);
+  Optional<String> getUser(String token);
 
   void setUserToken(String username, String token) throws InvalidUserTokenException;
 

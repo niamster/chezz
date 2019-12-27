@@ -1,12 +1,14 @@
 package chezz.datastore;
 
+import java.util.*;
+
 public class GameStoreSelector {
-  public GameStore getByName(String name, final DataStoreConnectionInformation info) {
+  public Optional<GameStore> getByName(String name, final DataStoreConnectionInformation info) {
     switch (name) {
       case "mem":
-        return new GameStoreMem(info);
+        return Optional.of(new GameStoreMem(info));
       default:
-        return null;
+        return Optional.empty();
     }
   }
 }

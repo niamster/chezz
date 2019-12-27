@@ -35,10 +35,10 @@ public class GameStoreMem implements GameStore {
   }
 
   @Override
-  public Game getGame(String gameId) {
+  public Optional<Game> getGame(String gameId) {
     rLock.lock();
     try {
-      return Game.load(gameById.get(gameId));
+      return Optional.ofNullable(Game.load(gameById.get(gameId)));
     } finally {
       rLock.unlock();
     }

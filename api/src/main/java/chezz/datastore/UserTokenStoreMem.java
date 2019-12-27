@@ -14,10 +14,10 @@ public class UserTokenStoreMem implements UserTokenStore {
   public UserTokenStoreMem(DataStoreConnectionInformation info) {}
 
   @Override
-  public String getUser(String token) {
+  public Optional<String> getUser(String token) {
     rLock.lock();
     try {
-      return userByToken.get(token);
+      return Optional.ofNullable(userByToken.get(token));
     } finally {
       rLock.unlock();
     }

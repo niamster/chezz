@@ -43,14 +43,14 @@ public class ApplicationConfig {
   public UserStore userStore() {
     String userStore = config.getUserStore();
     logger.info("Using '{}' as user store", userStore);
-    return new UserStoreSelector().getByName(userStore, new DataStoreConnectionInformation());
+    return new UserStoreSelector().getByName(userStore, new DataStoreConnectionInformation()).get();
   }
 
   @Bean
   public KeyWhitener keyWhitener() {
     String keyWhitener = config.getSecurityProperties().getKeyWhitener();
     logger.info("Using '{}' as key whitener", keyWhitener);
-    return new KeyWhitenerSelector().getByName(keyWhitener);
+    return new KeyWhitenerSelector().getByName(keyWhitener).get();
   }
 
   @Bean
@@ -58,14 +58,15 @@ public class ApplicationConfig {
     String userTokenStore = config.getUserTokenStore();
     logger.info("Using '{}' as user token store", userTokenStore);
     return new UserTokenStoreSelector()
-        .getByName(userTokenStore, new DataStoreConnectionInformation());
+        .getByName(userTokenStore, new DataStoreConnectionInformation())
+        .get();
   }
 
   @Bean
   public UserTokenGenerator userTokenGenerator() {
     String userTokenGenerator = config.getUserTokenGenerator();
     logger.info("Using '{}' as user token generator", userTokenGenerator);
-    return new UserTokenGeneratorSelector().getByName(userTokenGenerator);
+    return new UserTokenGeneratorSelector().getByName(userTokenGenerator).get();
   }
 
   // XXX: maybe this is not the best place to init User Manager

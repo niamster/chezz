@@ -1,13 +1,15 @@
 package chezz.users;
 
+import java.util.*;
+
 public class UserTokenGeneratorSelector {
 
-  public UserTokenGenerator getByName(String name) {
+  public Optional<UserTokenGenerator> getByName(String name) {
     switch (name) {
       case "simple":
-        return new UserTokenGeneratorSimple();
+        return Optional.of(new UserTokenGeneratorSimple());
       default:
-        return null;
+        return Optional.empty();
     }
   }
 }

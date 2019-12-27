@@ -7,7 +7,7 @@ public interface GameStore {
 
   List<Game> getGames(String userId);
 
-  Game getGame(String gameId);
+  Optional<Game> getGame(String gameId);
 
   void saveGame(Game game) throws Exception;
 
