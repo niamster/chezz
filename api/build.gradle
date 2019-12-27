@@ -51,8 +51,8 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 ext['junit-jupiter.version'] = '5.5.2'
 
