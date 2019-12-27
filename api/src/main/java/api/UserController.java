@@ -122,8 +122,8 @@ public class UserController {
   @GetMapping(APISecurity.PROTECTED_EP_PREFIX + "/user/info")
   public UserInfoResponse userInfo(
       @RequestParam(value = APISecurity.USER_TOKEN_PARAM) String userToken) {
-    String username = userTokenStore.getUser(userToken);
-    String email = userManager.getUserInfo(username).email;
+    String username = userTokenStore.getUser(userToken).orElse(null);
+    String email = userManager.getUserInfo(username).get().email;
     return new UserInfoResponse(username, email);
   }
 }

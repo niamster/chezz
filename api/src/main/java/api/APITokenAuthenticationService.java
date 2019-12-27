@@ -14,15 +14,16 @@ class APITokenAuthenticationService {
     this.userTokenStore = userTokenStore;
   }
 
-  public Authentication getAuthentication(HttpServletRequest request) {
+  public Optional<Authentication> getAuthentication(HttpServletRequest request) {
     String token = request.getParameter(APISecurity.USER_TOKEN_PARAM);
     if (token == null) {
-      return null;
+      return Optional.empty();
     }
-    String username = userTokenStore.getUser(token);
-    if (username == null) {
-      return null;
+    Optional<String> username = userTokenStore.getUser(token);
+    if (username.isEmpty()) {
+      return Optional.empty();
     }
-    return new UsernamePasswordAuthenticationToken(username, token, Collections.emptyList());
+    return Optional.of(
+        new UsernamePasswordAuthenticationToken(username, token, Collections.emptyList()));
   }
 }

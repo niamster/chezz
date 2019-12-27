@@ -26,18 +26,18 @@ public class UserManager {
   }
 
   public boolean verifyUser(String username, String password) {
-    UserMeta userMeta = store.getUserByName(username);
-    if (userMeta == null) {
+    Optional<UserMeta> userMeta = store.getUserByName(username);
+    if (userMeta.isEmpty()) {
       return false;
     }
-    return keyWhitener.verify(password, userMeta.hash);
+    return keyWhitener.verify(password, userMeta.get().hash);
   }
 
   public List<String> getAllUsers() {
     return store.getAllUsers();
   }
 
-  public UserInfo getUserInfo(String username) {
-    return store.getUserByName(username).userInfo;
+  public Optional<UserInfo> getUserInfo(String username) {
+    return store.getUserByName(username).map((info) -> info.userInfo);
   }
 }

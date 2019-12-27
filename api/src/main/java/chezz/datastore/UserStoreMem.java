@@ -45,20 +45,20 @@ public class UserStoreMem implements UserStore {
   }
 
   @Override
-  public UserMeta getUserById(String id) {
+  public Optional<UserMeta> getUserById(String id) {
     rLock.lock();
     try {
-      return metaById.get(id);
+      return Optional.ofNullable(metaById.get(id));
     } finally {
       rLock.unlock();
     }
   }
 
   @Override
-  public UserMeta getUserByName(String username) {
+  public Optional<UserMeta> getUserByName(String username) {
     rLock.lock();
     try {
-      return metaByUsername.get(username);
+      return Optional.ofNullable(metaByUsername.get(username));
     } finally {
       rLock.unlock();
     }

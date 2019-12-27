@@ -22,7 +22,7 @@ public class APIAuthenticationFilter extends GenericFilterBean {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
     Authentication authentication =
-        tokenAuthenticationService.getAuthentication((HttpServletRequest) request);
+        tokenAuthenticationService.getAuthentication((HttpServletRequest) request).orElse(null);
     SecurityContextHolder.getContext().setAuthentication(authentication);
     filterChain.doFilter(request, response);
   }

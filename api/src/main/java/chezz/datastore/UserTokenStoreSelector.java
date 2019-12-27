@@ -1,12 +1,15 @@
 package chezz.datastore;
 
+import java.util.*;
+
 public class UserTokenStoreSelector {
-  public UserTokenStore getByName(String name, final DataStoreConnectionInformation info) {
+  public Optional<UserTokenStore> getByName(
+      String name, final DataStoreConnectionInformation info) {
     switch (name) {
       case "mem":
-        return new UserTokenStoreMem(info);
+        return Optional.of(new UserTokenStoreMem(info));
       default:
-        return null;
+        return Optional.empty();
     }
   }
 }
