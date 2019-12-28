@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VersionController {
 
-  private String appVersion;
+  private final String appVersion;
 
   public VersionController(String appVersion) {
     this.appVersion = appVersion;

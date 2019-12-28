@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 public class KeyWhitenerArgon2 implements KeyWhitener {
 
   private final Logger logger = LogManager.getLogger(KeyWhitenerArgon2.class);
-  private int argon2Iterations;
+  private final int argon2Iterations;
   private static final int argon2MemKiB = 65536;
   private static final int argon2Parallelism = 1;
   private static final int argon2MaxMs = 1000;

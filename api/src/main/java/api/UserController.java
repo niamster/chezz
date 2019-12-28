@@ -110,8 +110,8 @@ public class UserController {
 
   static class UserInfoResponse {
 
-    public String username;
-    public String email;
+    public final String username;
+    public final String email;
 
     public UserInfoResponse(String username, String email) {
       this.username = username;
