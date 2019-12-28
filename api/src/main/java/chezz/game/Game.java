@@ -52,7 +52,7 @@ public class Game implements Serializable {
       ObjectInputStream iStream = new ObjectInputStream(new ByteArrayInputStream(data));
       game = (Game) iStream.readObject();
       iStream.close();
-    } catch (Exception exc) {
+    } catch (Exception ignored) {
     }
     return game;
   }
