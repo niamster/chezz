@@ -19,9 +19,9 @@ public class KeyWhitenerTests {
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"bcrypt", "argon2"})
   public void testKeyWhitener(String name) {
-    KeyWhitener kw = new KeyWhitenerSelector().getByName(name).get();
-    String hash_0 = kw.hash("key_0");
-    String hash_1 = kw.hash("key_1");
+    var kw = new KeyWhitenerSelector().getByName(name).get();
+    var hash_0 = kw.hash("key_0");
+    var hash_1 = kw.hash("key_1");
     assertNotEquals(hash_0, hash_1);
     assertTrue(kw.verify("key_0", hash_0));
     assertTrue(kw.verify("key_1", hash_1));

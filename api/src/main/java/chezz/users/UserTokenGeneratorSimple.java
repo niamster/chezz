@@ -9,7 +9,7 @@ public class UserTokenGeneratorSimple implements UserTokenGenerator {
 
   @Override
   public String generateToken(String username) {
-    byte[] random = new byte[16];
+    var random = new byte[16];
     rng.nextBytes(random);
     return Hex.encodeHexString(random);
   }

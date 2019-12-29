@@ -33,7 +33,7 @@ public class UserTokenStoreTests {
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
   public void testSetToken(String name) throws Exception {
-    UserTokenStore store = new UserTokenStoreSelector().getByName(name, null).get();
+    var store = new UserTokenStoreSelector().getByName(name, null).get();
     String token0 = "token-0", token1 = "token-1";
 
     assertTrue(store.getUser(token0).isEmpty());

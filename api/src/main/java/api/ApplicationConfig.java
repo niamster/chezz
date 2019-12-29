@@ -11,7 +11,6 @@ import chezz.users.KeyWhitenerSelector;
 import chezz.users.UserManager;
 import chezz.users.UserTokenGenerator;
 import chezz.users.UserTokenGeneratorSelector;
-import java.io.InputStream;
 import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +27,7 @@ public class ApplicationConfig {
 
   @Bean
   public String appVersion() throws Exception {
-    InputStream input = getClass().getClassLoader().getResourceAsStream("app.properties");
+    var input = getClass().getClassLoader().getResourceAsStream("app.properties");
     Properties prop = new Properties();
     prop.load(input);
     return prop.getProperty("version");
@@ -36,21 +35,21 @@ public class ApplicationConfig {
 
   @Bean
   public UserStore userStore() {
-    String userStore = config.getUserStore();
+    var userStore = config.getUserStore();
     logger.info("Using '{}' as user store", userStore);
     return new UserStoreSelector().getByName(userStore, new DataStoreConnectionInformation()).get();
   }
 
   @Bean
   public KeyWhitener keyWhitener() {
-    String keyWhitener = config.getSecurityProperties().getKeyWhitener();
+    var keyWhitener = config.getSecurityProperties().getKeyWhitener();
     logger.info("Using '{}' as key whitener", keyWhitener);
     return new KeyWhitenerSelector().getByName(keyWhitener).get();
   }
 
   @Bean
   public UserTokenStore userTokenStore() {
-    String userTokenStore = config.getUserTokenStore();
+    var userTokenStore = config.getUserTokenStore();
     logger.info("Using '{}' as user token store", userTokenStore);
     return new UserTokenStoreSelector()
         .getByName(userTokenStore, new DataStoreConnectionInformation())
@@ -59,7 +58,7 @@ public class ApplicationConfig {
 
   @Bean
   public UserTokenGenerator userTokenGenerator() {
-    String userTokenGenerator = config.getUserTokenGenerator();
+    var userTokenGenerator = config.getUserTokenGenerator();
     logger.info("Using '{}' as user token generator", userTokenGenerator);
     return new UserTokenGeneratorSelector().getByName(userTokenGenerator).get();
   }
