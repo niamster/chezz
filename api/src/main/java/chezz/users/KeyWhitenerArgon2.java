@@ -1,6 +1,5 @@
 package chezz.users;
 
-import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import de.mkammerer.argon2.Argon2Helper;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +14,7 @@ public class KeyWhitenerArgon2 implements KeyWhitener {
   private static final int argon2MaxMs = 1000;
 
   public KeyWhitenerArgon2() {
-    Argon2 argon2 = Argon2Factory.create();
+    var argon2 = Argon2Factory.create();
     argon2Iterations =
         Argon2Helper.findIterations(argon2, argon2MaxMs, argon2MemKiB, argon2Parallelism);
     logger.info("Argon2 iterations {}", argon2Iterations);
@@ -23,7 +22,7 @@ public class KeyWhitenerArgon2 implements KeyWhitener {
 
   @Override
   public String hash(String key) {
-    Argon2 argon2 = Argon2Factory.create();
+    var argon2 = Argon2Factory.create();
     char[] keyArray = key.toCharArray();
     try {
       return argon2.hash(argon2Iterations, argon2MemKiB, argon2Parallelism, keyArray);
@@ -34,7 +33,7 @@ public class KeyWhitenerArgon2 implements KeyWhitener {
 
   @Override
   public boolean verify(String key, String hash) {
-    Argon2 argon2 = Argon2Factory.create();
+    var argon2 = Argon2Factory.create();
     char[] keyArray = key.toCharArray();
     try {
       return argon2.verify(hash, keyArray);

@@ -17,16 +17,16 @@ public class GameTests {
 
   @Test
   public void testInvalidGame() throws Exception {
-    Game game_0 = new Game("p0").join("p1");
+    var game_0 = new Game("p0").join("p1");
     assertThrows(GameException.class, () -> game_0.join("p2"));
-    Game game_1 = new Game("p0");
+    var game_1 = new Game("p0");
     assertThrows(GameException.class, () -> game_1.setDeck("p1", new Deck()));
   }
 
   @Test
   public void testGameMove() throws Exception {
-    Game game = new Game("p0").join("p1");
-    String transactionId = game.getCurrentTransactionId();
+    var game = new Game("p0").join("p1");
+    var transactionId = game.getCurrentTransactionId();
     assertThrows(GameException.class, () -> game.setDeck("p1", new Deck()));
     assertDoesNotThrow(() -> game.setDeck("p0", new Deck()));
     assertEquals(Game.generateNextTransactionId(transactionId), game.getCurrentTransactionId());
@@ -43,7 +43,7 @@ public class GameTests {
     String gameId;
     String transactionId;
     {
-      Game game = new Game("p0").join("p1");
+      var game = new Game("p0").join("p1");
       game.setDeck("p0", new Deck());
       blob = game.dump();
       gameId = game.getGameId();
@@ -51,7 +51,7 @@ public class GameTests {
       assertNotNull(gameId);
       assertNotEquals("", gameId);
     }
-    Game game = Game.load(blob);
+    var game = Game.load(blob);
     assertEquals(Color.BLACK, game.getTurn());
     assertEquals(gameId, game.getGameId());
     assertEquals(transactionId, game.getCurrentTransactionId());

@@ -33,11 +33,11 @@ public class UserStoreTests {
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
   public void testAddUser(String name) throws Exception {
-    UserStore store = new UserStoreSelector().getByName(name, null).get();
+    var store = new UserStoreSelector().getByName(name, null).get();
     assertTrue(store.getUserByName("test_user").isEmpty());
     assertEquals(0, store.getAllUsers().size());
     assertTrue(store.addUser(new UserInfo("test_user", "u@u"), "--"));
-    UserMeta userMeta = store.getUserByName("test_user").get();
+    var userMeta = store.getUserByName("test_user").get();
     assertEquals("u@u", userMeta.userInfo.email);
     assertEquals(userMeta, store.getUserById(userMeta.id).get());
     assertEquals(1, store.getAllUsers().size());

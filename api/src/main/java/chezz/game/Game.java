@@ -39,8 +39,8 @@ public class Game implements Serializable {
   }
 
   public byte[] dump() throws Exception {
-    ByteArrayOutputStream boStream = new ByteArrayOutputStream();
-    ObjectOutputStream oStream = new ObjectOutputStream(boStream);
+    var boStream = new ByteArrayOutputStream();
+    var oStream = new ObjectOutputStream(boStream);
     oStream.writeObject(this);
     oStream.close();
     return boStream.toByteArray();
@@ -49,7 +49,7 @@ public class Game implements Serializable {
   public static Game load(byte[] data) {
     Game game = null;
     try {
-      ObjectInputStream iStream = new ObjectInputStream(new ByteArrayInputStream(data));
+      var iStream = new ObjectInputStream(new ByteArrayInputStream(data));
       game = (Game) iStream.readObject();
       iStream.close();
     } catch (Exception ignored) {
@@ -74,7 +74,7 @@ public class Game implements Serializable {
     if (players.size() != 2) {
       throw new GameException("not enough players");
     }
-    Color color = players.get(player);
+    var color = players.get(player);
     if (color != this.turn) {
       throw new GameException("this player can't do a move");
     }

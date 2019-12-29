@@ -15,11 +15,11 @@ class APITokenAuthenticationService {
   }
 
   public Optional<Authentication> getAuthentication(HttpServletRequest request) {
-    String token = request.getParameter(APISecurity.USER_TOKEN_PARAM);
+    var token = request.getParameter(APISecurity.USER_TOKEN_PARAM);
     if (token == null) {
       return Optional.empty();
     }
-    Optional<String> username = userTokenStore.getUser(token);
+    var username = userTokenStore.getUser(token);
     if (username.isEmpty()) {
       return Optional.empty();
     }

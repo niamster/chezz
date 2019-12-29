@@ -19,7 +19,7 @@ public class UserTokenGeneratorTests {
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"simple"})
   public void testKeyWhitener(String name) {
-    UserTokenGenerator gen = new UserTokenGeneratorSelector().getByName(name).get();
+    var gen = new UserTokenGeneratorSelector().getByName(name).get();
     assertNotEquals(gen.generateToken("a"), gen.generateToken("b"));
   }
 }

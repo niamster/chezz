@@ -67,7 +67,7 @@ public class UserControllerTests {
         .andExpect(jsonPath("$.status").value("fail"))
         .andExpect(jsonPath("$.token").isEmpty())
         .andDo(print());
-    String result =
+    var result =
         mockMvc
             .perform(
                 post("/public/signup")
@@ -83,7 +83,7 @@ public class UserControllerTests {
             .andReturn()
             .getResponse()
             .getContentAsString();
-    String userToken = objectMapper.readValue(result, UserController.Status.class).token;
+    var userToken = objectMapper.readValue(result, UserController.Status.class).token;
     mockMvc
         .perform(
             post("/public/signup")

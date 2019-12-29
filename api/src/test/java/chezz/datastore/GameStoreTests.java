@@ -24,7 +24,7 @@ public class GameStoreTests {
   @ParameterizedTest(name = "run #{index} with [{arguments}]")
   @ValueSource(strings = {"mem"})
   public void testGameStore(String name) throws Exception {
-    GameStore store = new GameStoreSelector().getByName(name, null).get();
+    var store = new GameStoreSelector().getByName(name, null).get();
     assertEquals(0, store.getGames("user_0").size());
     store.saveGame(new Game("user_0").join("user_1"));
     assertEquals(1, store.getGames("user_0").size());
@@ -32,17 +32,17 @@ public class GameStoreTests {
     store.saveGame(new Game("user_0").join("user_1"));
     assertEquals(2, store.getGames("user_0").size());
     assertEquals(2, store.getGames("user_1").size());
-    Game game = store.getGames("user_0").get(0);
+    var game = store.getGames("user_0").get(0);
     assertDoesNotThrow(() -> game.setDeck("user_0", new Deck()));
     store.saveGame(game);
     assertEquals(Color.BLACK, store.getGame(game.getGameId()).get().getTurn());
     game.setDeck("user_1", new Deck());
     game.setDeck("user_0", new Deck());
-    Exception thrown = assertThrows(GameStoreException.class, () -> store.saveGame(game));
+    var thrown = assertThrows(GameStoreException.class, () -> store.saveGame(game));
     assertEquals("invalid transaction ID", thrown.getMessage());
 
     assertEquals(0, store.getOpenGameIds().size());
-    Game tGame = new Game("user_0");
+    var tGame = new Game("user_0");
     store.saveGame(tGame);
     assertEquals(1, store.getOpenGameIds().size());
     tGame.join("user_1");

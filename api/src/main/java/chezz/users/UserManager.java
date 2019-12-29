@@ -2,7 +2,6 @@ package chezz.users;
 
 import chezz.datastore.InvalidUserException;
 import chezz.datastore.UserInfo;
-import chezz.datastore.UserMeta;
 import chezz.datastore.UserStore;
 import java.util.*;
 
@@ -17,7 +16,7 @@ public class UserManager {
   }
 
   public boolean addUser(String username, String email, String password) {
-    String hash = keyWhitener.hash(password);
+    var hash = keyWhitener.hash(password);
     try {
       return store.addUser(new UserInfo(username, email), hash);
     } catch (InvalidUserException exc) {
@@ -26,7 +25,7 @@ public class UserManager {
   }
 
   public boolean verifyUser(String username, String password) {
-    Optional<UserMeta> userMeta = store.getUserByName(username);
+    var userMeta = store.getUserByName(username);
     if (userMeta.isEmpty()) {
       return false;
     }

@@ -20,12 +20,12 @@ public class GameStoreMem implements GameStore {
   public List<Game> getGames(String userId) {
     rLock.lock();
     try {
-      Set<String> gameIds = gamesByUserId.get(userId);
-      List<Game> games = new LinkedList<>();
+      var gameIds = gamesByUserId.get(userId);
+      var games = new LinkedList<Game>();
       if (gameIds == null) {
         return games;
       }
-      for (String gameId : gameIds) {
+      for (var gameId : gameIds) {
         games.add(Game.load(gameById.get(gameId)));
       }
       return games;
@@ -48,8 +48,8 @@ public class GameStoreMem implements GameStore {
   public void saveGame(Game game) throws Exception {
     wLock.lock();
     try {
-      String gameId = game.getGameId();
-      String currentTransactionId = transactionIdByGameId.get(gameId);
+      var gameId = game.getGameId();
+      var currentTransactionId = transactionIdByGameId.get(gameId);
       if (game.isOpen()) {
         this.openGames.add(gameId);
       } else {
@@ -63,7 +63,7 @@ public class GameStoreMem implements GameStore {
       }
       gameById.put(gameId, game.dump());
       transactionIdByGameId.put(gameId, game.getCurrentTransactionId());
-      for (String player : game.getPlayers()) {
+      for (var player : game.getPlayers()) {
         Set<String> games = gamesByUserId.computeIfAbsent(player, k -> new HashSet<>());
         games.add(gameId);
       }
@@ -74,7 +74,7 @@ public class GameStoreMem implements GameStore {
 
   @Override
   public List<String> getOpenGameIds() {
-    List<String> games = new LinkedList<>();
+    var games = new LinkedList<String>();
     rLock.lock();
     try {
       games.addAll(this.openGames);
