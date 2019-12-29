@@ -5,9 +5,9 @@ import java.util.*;
 
 public interface GameStore {
 
-  List<Game> getGames(String userId);
+  List<Game> getGamesByUserId(String userId);
 
-  Optional<Game> getGame(String gameId);
+  Optional<Game> getGameById(String gameId);
 
   void saveGame(Game game) throws Exception;
 

@@ -25,17 +25,17 @@ public class GameStoreTests {
   @ValueSource(strings = {"mem"})
   public void testGameStore(String name) throws Exception {
     var store = new GameStoreSelector().getByName(name, null).get();
-    assertEquals(0, store.getGames("user_0").size());
+    assertEquals(0, store.getGamesByUserId("user_0").size());
     store.saveGame(new Game("user_0").join("user_1"));
-    assertEquals(1, store.getGames("user_0").size());
-    assertEquals(1, store.getGames("user_1").size());
+    assertEquals(1, store.getGamesByUserId("user_0").size());
+    assertEquals(1, store.getGamesByUserId("user_1").size());
     store.saveGame(new Game("user_0").join("user_1"));
-    assertEquals(2, store.getGames("user_0").size());
-    assertEquals(2, store.getGames("user_1").size());
-    var game = store.getGames("user_0").get(0);
+    assertEquals(2, store.getGamesByUserId("user_0").size());
+    assertEquals(2, store.getGamesByUserId("user_1").size());
+    var game = store.getGamesByUserId("user_0").get(0);
     assertDoesNotThrow(() -> game.setDeck("user_0", new Deck()));
     store.saveGame(game);
-    assertEquals(Color.BLACK, store.getGame(game.getGameId()).get().getTurn());
+    assertEquals(Color.BLACK, store.getGameById(game.getGameId()).get().getTurn());
     game.setDeck("user_1", new Deck());
     game.setDeck("user_0", new Deck());
     var thrown = assertThrows(GameStoreException.class, () -> store.saveGame(game));
@@ -49,6 +49,6 @@ public class GameStoreTests {
     store.saveGame(tGame);
     assertEquals(0, store.getOpenGameIds().size());
 
-    assertTrue(store.getGame("xyz").isEmpty());
+    assertTrue(store.getGameById("xyz").isEmpty());
   }
 }

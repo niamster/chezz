@@ -17,7 +17,7 @@ public class GameStoreMem implements GameStore {
   public GameStoreMem(final DataStoreConnectionInformation info) {}
 
   @Override
-  public List<Game> getGames(String userId) {
+  public List<Game> getGamesByUserId(String userId) {
     rLock.lock();
     try {
       var gameIds = gamesByUserId.get(userId);
@@ -35,7 +35,7 @@ public class GameStoreMem implements GameStore {
   }
 
   @Override
-  public Optional<Game> getGame(String gameId) {
+  public Optional<Game> getGameById(String gameId) {
     rLock.lock();
     try {
       return Optional.ofNullable(Game.load(gameById.get(gameId)));
